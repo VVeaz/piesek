@@ -9,11 +9,8 @@ export default class SideMenu extends Component {
     boxShadow: "none",
     fontSize: 20,
     backgroundColor: "#CAE2FF",
-    height: "100%"
-  };
-
-  menuItemStyle = {
-    color: "black"
+    height: "100%",
+    width: "100%"
   };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
@@ -30,7 +27,6 @@ export default class SideMenu extends Component {
             <Menu.Header>Damian Wnukowski</Menu.Header>
             <Menu.Menu>
               <Menu.Item
-                style={this.menuItemStyle}
                 name="Ustawienia konta"
                 active={activeItem === "Ustawienia konta"}
                 onClick={this.handleItemClick}
