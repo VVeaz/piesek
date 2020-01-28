@@ -7,9 +7,9 @@ export default class SideMenu extends Component {
   menuStyle = {
     border: 0,
     boxShadow: "none",
-    width: "15%",
     fontSize: 20,
-    backgroundColor: "#CAE2FF"
+    backgroundColor: "#CAE2FF",
+    height: "100%"
   };
 
   menuItemStyle = {
@@ -40,11 +40,7 @@ export default class SideMenu extends Component {
                 active={activeItem === "Powiadomienia"}
                 onClick={this.handleItemClick}
               />
-              <Menu.Item
-                name="Wyloguj się"
-                active={activeItem === "Wyloguj się"}
-                onClick={this.handleItemClick}
-              />
+              <Menu.Item name="Wyloguj się" onClick={e => null} />
             </Menu.Menu>
           </Menu.Item>
           <Menu.Item>

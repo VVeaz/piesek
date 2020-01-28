@@ -4,9 +4,9 @@ import SideMenu from "./components/SideMenu";
 
 function App() {
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       <SideMenu />
-      test
+      <div>test</div>
     </div>
   );
 }
