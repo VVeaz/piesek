@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Container, Image } from "semantic-ui-react";
+import { Menu, Container, Image, Button } from "semantic-ui-react";
 import icon from "../logo.png";
 
 export default class SideMenu extends Component {
@@ -24,11 +24,9 @@ export default class SideMenu extends Component {
                     <Menu.Item>
                         <Image src={icon}></Image>
                         <Menu.Menu>
-                            <Menu.Item
-                                name="Zaloguj się"
-                                active={activeItem === "Zaloguj się"}
-                                onClick={this.handleItemClick}
-                            />
+                            <Menu.Item>
+                                <Button color="teal">Zaloguj się</Button>
+                            </Menu.Item>
                         </Menu.Menu>
                     </Menu.Item>
 
