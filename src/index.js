@@ -6,12 +6,14 @@ import LogIn from "./LogIn"
 import * as serviceWorker from "./serviceWorker";
 
 import "./index.css";
+import AppUnlogged from "./AppUnlogged";
 
 const routing = (
     <Router>
         <div>
-            <Route exact path="/" component={App} />
+            <Route exact path="/" component={AppUnlogged} />
             <Route exact path="/login" component={LogIn} />
+            <Route exact path="/logged" component={App} />
         </div>
     </Router>
 )
