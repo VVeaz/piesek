@@ -9,7 +9,7 @@ export default class SideMenu extends Component {
     boxShadow: "none",
     fontSize: 20,
     backgroundColor: "#CAE2FF",
-    height: "100%",
+    height: "100vh",
     width: "100%"
   };
 

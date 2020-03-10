@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Menu, Container, Image, Button } from "semantic-ui-react";
+import { Link } from 'react-router-dom'
 import icon from "../logo.png";
 
 export default class SideMenu extends Component {
@@ -9,8 +10,9 @@ export default class SideMenu extends Component {
         boxShadow: "none",
         fontSize: 20,
         backgroundColor: "#CAE2FF",
-        height: "100%",
-        width: "100%"
+        height: "100vh",
+        width: "100%",
+        "text-align": "center"
     };
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
@@ -25,13 +27,13 @@ export default class SideMenu extends Component {
                         <Image src={icon}></Image>
                         <Menu.Menu>
                             <Menu.Item>
-                                <Button color="teal">Zaloguj się</Button>
+                                <Link to="/login"><Button style={{ backgroundColor: "#FFFFFF", width: "100%" }}>Zaloguj się</Button></Link>
                             </Menu.Item>
                         </Menu.Menu>
                     </Menu.Item>
 
                 </Container>
-            </Menu>
+            </Menu >
         );
     }
 }
