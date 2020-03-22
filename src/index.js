@@ -7,6 +7,7 @@ import * as serviceWorker from "./serviceWorker";
 
 import "./index.css";
 import AppUnlogged from "./AppUnlogged";
+import RegistrationAdmin from "./RegistrationAdmin";
 
 const routing = (
     <Router>
@@ -14,6 +15,7 @@ const routing = (
             <Route exact path="/" component={AppUnlogged} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/logged" component={App} />
+            <Route exact path="/register" component={RegistrationAdmin} />
         </div>
     </Router>
 )
