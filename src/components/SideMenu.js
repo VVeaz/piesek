@@ -57,11 +57,13 @@ export default class SideMenu extends Component {
           <Menu.Item>
             <Menu.Header>Dla administratora</Menu.Header>
             <Menu.Menu>
-              <Menu.Item
-                name="Zarejestruj nowego pracownika"
-                active={activeItem === "Zarejestruj nowego pracownika"}
-                onClick={this.handleItemClick}
-              />
+              <a href="http://localhost:3000/register">
+                <Menu.Item
+                  name="Zarejestruj nowego pracownika"
+                  active={activeItem === "Zarejestruj nowego pracownika"}
+                  onClick={this.handleItemClick}
+                />
+              </a>
               <Menu.Item
                 name="Zarządzaj kontami"
                 active={activeItem === "Zarządzaj kontami"}
