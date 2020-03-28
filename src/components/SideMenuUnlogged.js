@@ -18,13 +18,11 @@ export default class SideMenu extends Component {
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
     render() {
-        const { activeItem } = this.state;
-
         return (
             <Menu vertical style={this.menuStyle} height={window.innerHeight}>
                 <Container>
                     <Menu.Item>
-                        <Image src={icon}></Image>
+                        <Link to="/"> <Image src={icon}></Image></Link>
                         <Menu.Menu>
                             <Menu.Item>
                                 <Link to="/login"><Button style={{ backgroundColor: "#FFFFFF", width: "100%" }}>Zaloguj się</Button></Link>

@@ -1,9 +1,15 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
-import SideMenu from "./components/SideMenu";
 import { Grid } from "semantic-ui-react";
+import SideMenu from "./components/SideMenu";
+import AppUnlogged from "./AppUnlogged";
+import axios from 'axios'
 
 function App() {
+  if (!axios.defaults.headers.common["Authorization"]) {
+    return (<AppUnlogged />);
+  }
+
   return (
     <div style={{ height: "100%" }}>
       <Grid style={{ height: "100%", padding: 0, margin: 0 }}>
@@ -33,6 +39,7 @@ function App() {
       </Grid>
     </div>
   );
+
 }
 
 export default App;
