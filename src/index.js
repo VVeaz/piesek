@@ -4,7 +4,7 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import App from "./App";
 import LogIn from "./LogIn"
 import * as serviceWorker from "./serviceWorker";
-
+import axios from 'axios';
 import "./index.css";
 import AppUnlogged from "./AppUnlogged";
 import RegistrationAdmin from "./RegistrationAdmin";
@@ -20,5 +20,5 @@ const routing = (
     </Router>
 )
 
-
+axios.defaults.baseURL = 'localhost:8080/api/';
 ReactDOM.render(routing, document.getElementById('root'));
