@@ -4,24 +4,29 @@ import SideMenu from "./components/SideMenu";
 import { Button, Select, Form, Grid } from "semantic-ui-react";
 import axios from 'axios'
 const roleOptions = [
-    { key: 'e', text: 'Pracownik', value: 'employee' },
+    { key: 'u', text: 'Pracownik', value: 'USER' },
 ]
 const formFields = { email: '', name: '', lastName: '', role: '' }
 function RegistrationAdmin() {
 
-    function inputChangeHandler(e) {
-        formFields[e.target.name] = e.target.value;
+    function inputChangeHandler(e, name, value) {
+        if (name == 'role') {
+            formFields[name] = value;
+        } else {
+            formFields[name] = e.target.value;
+        }
+
 
     }
-    function formHandler(formFields) {
-        axios.post('user-account/init-user-account-create', formFields)
+    function formHandler(event) {
+        console.log(formFields)
+        axios.post('http://localhost:8080/api/user-account/init-user-account-create', formFields)
             .then(function (response) {
                 console.log(response);
-                //Perform action based on response
             })
             .catch(function (error) {
                 console.log(error);
-                //Perform action based on error
+                console.log(formFields)
             });
     }
 
@@ -41,24 +46,27 @@ function RegistrationAdmin() {
 
                         <Grid columns={3}>
                             <Grid.Column>
-                                <Form onsubmit={formHandler(formFields)}>
+                                <Form onSubmit={formHandler}>
 
-                                    <Form.Field onChange={(e) => inputChangeHandler(e)}>
+                                    <Form.Field onChange={(e) => inputChangeHandler(e, 'name')}>
                                         <label>Imię</label>
                                         <input placeholder='Imię' />
                                     </Form.Field>
-                                    <Form.Field onChange={(e) => inputChangeHandler(e)}>
+                                    <Form.Field onChange={(e) => inputChangeHandler(e, 'lastName')}>
                                         <label>Nazwisko</label>
                                         <input placeholder='Nazwisko' />
                                     </Form.Field>
-                                    <Form.Field onChange={(e) => inputChangeHandler(e)}>
+                                    <Form.Field onChange={(e) => inputChangeHandler(e, 'email')}>
                                         <label>E-mail</label>
                                         <input placeholder='E-mail' />
                                     </Form.Field>
-                                    <Form.Field onChange={(e) => inputChangeHandler(e)}
+                                    <Form.Field onChange={(e, { value }) => inputChangeHandler(e, 'role', value)}
                                         control={Select}
                                         options={roleOptions}
                                         placeholder='Rola'
+                                        label={{ children: 'Rola', htmlFor: 'form-select-control-gender' }}
+                                        search
+                                        searchInput={{ id: 'form-select-control-gender' }}
                                     />
 
 

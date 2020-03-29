@@ -4,6 +4,7 @@ import { Route, BrowserRouter as Router } from 'react-router-dom'
 import App from "./App";
 import LogIn from "./LogIn"
 import RegistrationUser from "./RegistrationUser"
+import RegistrationAdmin from "./RegistrationAdmin"
 import "./index.css";
 import history from './history';
 import axios from 'axios';
@@ -16,6 +17,7 @@ const routing = (
             <Route exact path="/" component={App} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/RU" component={RegistrationUser} />
+            <Route exact path="/register" component={RegistrationAdmin} />
         </div>
     </Router>
 )
