@@ -1,18 +1,12 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
-import SideMenuUnlogged from "./components/SideMenuUnlogged";
-import {
-    Button,
-    Form,
-    Grid,
-    Header,
-    Message,
-    Segment,
-} from 'semantic-ui-react';
 import './css/LogIn.css'
+import { Button, Form, Grid, Segment } from 'semantic-ui-react';
+import SideMenuUnlogged from "./components/SideMenuUnlogged";
+import axios from 'axios';
+import history from './history'
 
 export default function LogIn() {
-    const [token, setToken] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [errorMessage, setErrorMessage] = React.useState("");
@@ -22,29 +16,17 @@ export default function LogIn() {
     }
 
     function handleSubmit(event) {
-        event.preventDefault();
-        const formData = new FormData(event.target)
-
-        const param = {
-            method: 'POST',
-            body: formData,
-        }
-
-        try {
-            fetch("http://localhost:8080/login", param)
-                .then(response => setToken(response))
-            // .then(data => this.setState({ token: data.token })))
-
-        } catch{
-            setErrorMessage("PROBLEM Z SERWEREM...")
-        }
-
-        if (this.token == null) {
-            setErrorMessage("NIEPRAWIDŁOWE DANE LOGOWANIA")
-        }
-        else {
-            setErrorMessage("UDANE")
-        }
+        axios.post('http://localhost:8080/api/login', {
+            "email": email,
+            "password": password
+        }).then(function (response) {
+            localStorage.setItem('Authorization', response.headers["authorization"]);
+            history.replace("/");
+            window.location.reload();
+        }).catch(function (error) {
+            setErrorMessage("NIEPRAWIDŁOWE DANE LOGOWANIA");
+            console.log(error);
+        });
     }
 
     return (

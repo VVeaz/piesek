@@ -1,7 +1,8 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
-import SideMenuUnlogged from "./components/SideMenuUnlogged";
 import { Grid } from "semantic-ui-react";
+import SideMenuUnlogged from "./components/SideMenuUnlogged";
+
 
 function AppUnlogged() {
     return (
@@ -15,7 +16,7 @@ function AppUnlogged() {
                         <h1>Strona główna</h1>
                         <hr />
                         <p>
-                            <h4>Witaj w aplikacji PIESEK.</h4>
+                            <h4>Witaj w aplikacji PIESEK. </h4>
                             <h4>Żeby korzystać z aplikacji należy się zalogować.</h4>
                         </p>
                         <hr />

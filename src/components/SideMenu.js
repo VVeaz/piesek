@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Menu, Container, Image } from "semantic-ui-react";
+import { Link } from 'react-router-dom'
 import icon from "../logo.png";
 
 export default class SideMenu extends Component {
@@ -22,7 +23,7 @@ export default class SideMenu extends Component {
       <Menu vertical style={this.menuStyle} height={window.innerHeight}>
         <Container>
           <Menu.Item>
-            <Image src={icon}></Image>
+            <Link to="/"> <Image src={icon}></Image></Link>
             <Menu.Header>Zalogowany jako:</Menu.Header>
             <Menu.Header>Damian Wnukowski</Menu.Header>
             <Menu.Menu>
@@ -36,7 +37,7 @@ export default class SideMenu extends Component {
                 active={activeItem === "Powiadomienia"}
                 onClick={this.handleItemClick}
               />
-              <Menu.Item name="Wyloguj się" onClick={e => null} />
+              <Menu.Item name="Wyloguj się" onClick={e => { localStorage.setItem('Authorization', ""); window.location.reload(); }} />
             </Menu.Menu>
           </Menu.Item>
           <Menu.Item>
