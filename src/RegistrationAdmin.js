@@ -58,7 +58,7 @@ function RegistrationAdmin() {
     if (!axios.defaults.headers.common["Authorization"]) {
         return (<AppUnlogged />);
     }
-    if (!hasPermission("MANAGE_USER_ACCOUNTS")) {
+    if (!hasPermission("ROLE_ADD_USER_ACCOUNT")) {
         return (<App />);
     }
     return (
