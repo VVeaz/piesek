@@ -23,10 +23,10 @@ function RegistrationAdmin() {
                 console.log(error);
                 return []
             })
-        return await res.indexOf(permission) != -1;
+        return await res.indexOf(permission) !== -1;
     }
     function inputChangeHandler(e, name, value) {
-        if (name == 'role') {
+        if (name === 'role') {
             formFields[name] = value;
         } else {
             formFields[name] = e.target.value;

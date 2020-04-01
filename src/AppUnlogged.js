@@ -3,7 +3,6 @@ import "semantic-ui-css/semantic.min.css";
 import { Grid } from "semantic-ui-react";
 import SideMenuUnlogged from "./components/SideMenuUnlogged";
 
-
 function AppUnlogged() {
     return (
         <div style={{ height: "100%" }}>
