@@ -27,11 +27,13 @@ export default class SideMenu extends Component {
             <Menu.Header>Zalogowany jako:</Menu.Header>
             <Menu.Header>Damian Wnukowski</Menu.Header>
             <Menu.Menu>
-              <Menu.Item
-                name="Ustawienia konta"
-                active={activeItem === "Ustawienia konta"}
-                onClick={this.handleItemClick}
-              />
+              <a href="http://localhost:3000/account-settings">
+                <Menu.Item
+                  name="Ustawienia konta"
+                  active={activeItem === "Ustawienia konta"}
+                  onClick={this.handleItemClick}
+                />
+              </a>
               <Menu.Item
                 name="Powiadomienia"
                 active={activeItem === "Powiadomienia"}
