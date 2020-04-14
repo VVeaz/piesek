@@ -8,6 +8,7 @@ import RegistrationAdmin from "./RegistrationAdmin"
 import "./index.css";
 import history from './history';
 import axios from 'axios';
+import AccountSettings from "./AccountSettings";
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
 
@@ -18,6 +19,7 @@ const routing = (
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/register" component={RegistrationAdmin} />
             <Route path="/finish-create-user" component={RegistrationUser} />
+            <Route path="/account-settings" component={AccountSettings} />
         </div>
     </Router>
 )
