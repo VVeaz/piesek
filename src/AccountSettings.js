@@ -8,7 +8,7 @@ import AppUnlogged from "./AppUnlogged";
 class AccountSettings extends Component {
     constructor(props) {
         super(props);
-        this.state = { show: false, passwordCurrent: "", password: "", passwordConfirm: "", correct: false, success: false, error: false }
+        this.state = { show: false, currentPassword: "", password: "", passwordConfirm: "", correct: false, success: false, error: false }
     }
 
     onClick = e => {
@@ -18,21 +18,26 @@ class AccountSettings extends Component {
     };
 
     componentDidUpdate() {
-        console.log(this.state.password.length > 7 && this.state.passwordConfirm.length > 7 && this.state.password == this.state.passwordConfirm)
-        if (!this.state.correct && this.state.password.length > 7 && this.state.passwordConfirm.length > 7 && this.state.password == this.state.passwordConfirm) {
+        if (!this.state.correct && this.state.password.length > 7 && this.state.passwordConfirm.length > 7 && this.state.password === this.state.passwordConfirm) {
             this.setState({ correct: true })
+        }
+        else if (this.state.correct && this.state.password !== this.state.passwordConfirm) {
+            this.setState({ correct: false })
         }
     }
 
     onSubmit = e => {
+        var self = this;
         axios.post('http://localhost:8080/api/user-account/change-password', {
-            "passwordCurrent": this.state.passwordCurrent,
+            "currentPassword": this.state.currentPassword,
             "password": this.state.password,
             "passwordConfirm": this.state.passwordConfirm
         }).then(function (response) {
-            console.log(response);
+            self.setState({ success: true, show: false, currentPassword: "", password: "", passwordConfirm: "", error: false, correct: false })
+            //console.log(response);
         }).catch(function (error) {
-            console.log(error);
+            self.setState({ error: true, currentPassword: "", correct: false })
+            //console.log(error);
         });
     }
 
@@ -52,17 +57,17 @@ class AccountSettings extends Component {
                             <hr />
                             <Grid columns={3}>
                                 <Grid.Column>
-
                                     <div style={{ display: this.state.show ? "none" : "block" }}>
                                         <br />
                                         <Button onClick={this.onClick} style={{ backgroundColor: "#CAE2FF" }}
                                             type='submit'>Zmień hasło</Button>
                                     </div>
                                     <h3 style={{ display: this.state.show ? "block" : "none" }}>Zmiana hasła</h3>
+                                    <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Niezgodność: Nie udało się zmienić hasła...</p>
 
                                     <Form onSubmit={this.onSubmit} style={{ display: this.state.show ? "block" : "none" }}>
                                         <label>Stare hasło</label>
-                                        <Form.Input type="password" value={this.state.passwordCurrent} onChange={e => this.setState({ passwordCurrent: e.target.value })}>
+                                        <Form.Input type="password" value={this.state.currentPassword} onChange={e => this.setState({ currentPassword: e.target.value })}>
                                             <input placeholder='' />
                                         </Form.Input>
                                         <label>Nowe hasło</label>
@@ -75,11 +80,12 @@ class AccountSettings extends Component {
                                         </Form.Input>
                                         <Button style={{ backgroundColor: "#CAE2FF" }} type='submit' disabled={!this.state.correct} >Zatwierdź nowe hasło</Button>
                                     </Form>
-
                                     <div style={{ display: this.state.show ? "none" : "block" }}>
                                         <br />
                                         <h3><label> Damian Wnukowski</label></h3>
                                         <h4><label>Email: damian.wnukowski@email.com</label></h4>
+                                        <br />
+                                        <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Zmiana hasła zakończona sukcesem!!</p>
                                     </div>
                                 </Grid.Column>
                             </Grid>
@@ -93,7 +99,6 @@ class AccountSettings extends Component {
 export default AccountSettings;
 
 // function AccountSettings() {
-
 
 //     return (
 //         <div style={{ height: "100%" }}>

@@ -27,13 +27,13 @@ export default class SideMenu extends Component {
             <Menu.Header>Zalogowany jako:</Menu.Header>
             <Menu.Header>Damian Wnukowski</Menu.Header>
             <Menu.Menu>
-              <a href="http://localhost:3000/account-settings">
+              <Link to="/account-settings">
                 <Menu.Item
                   name="Ustawienia konta"
                   active={activeItem === "Ustawienia konta"}
                   onClick={this.handleItemClick}
                 />
-              </a>
+              </Link>
               <Menu.Item
                 name="Powiadomienia"
                 active={activeItem === "Powiadomienia"}
@@ -60,13 +60,13 @@ export default class SideMenu extends Component {
           <Menu.Item>
             <Menu.Header>Dla administratora</Menu.Header>
             <Menu.Menu>
-              <a href="http://localhost:3000/register">
+              <Link to="/register">
                 <Menu.Item
                   name="Zarejestruj nowego pracownika"
                   active={activeItem === "Zarejestruj nowego pracownika"}
                   onClick={this.handleItemClick}
                 />
-              </a>
+              </Link>
               <Menu.Item
                 name="Zarządzaj kontami"
                 active={activeItem === "Zarządzaj kontami"}
