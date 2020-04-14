@@ -1,8 +1,9 @@
 import "semantic-ui-css/semantic.min.css";
 import SideMenu from "./components/SideMenu";
-import { Button, Select, Form, Grid } from "semantic-ui-react";
-import ReactDOM from 'react-dom';
+import { Button, Form, Grid } from "semantic-ui-react";
 import React, { Component } from 'react';
+import axios from 'axios'
+import AppUnlogged from "./AppUnlogged";
 
 class AccountSettings extends Component {
     constructor(props) {
@@ -16,6 +17,9 @@ class AccountSettings extends Component {
         });
     };
     render() {
+        if (!axios.defaults.headers.common["Authorization"]) {
+            return (<AppUnlogged />);
+        }
         return (
 
 
@@ -30,28 +34,31 @@ class AccountSettings extends Component {
                             <hr />
                             <Grid columns={3}>
                                 <Grid.Column>
+
                                     <div style={{ display: this.state.show ? "none" : "block" }}>
+                                        <br />
                                         <Button onClick={this.onClick} style={{ backgroundColor: "#CAE2FF" }}
                                             type='submit'>Zmień hasło</Button>
                                     </div>
                                     <h3 style={{ display: this.state.show ? "block" : "none" }}>Zmiana hasła</h3>
-                                    <Form style={{ display: this.state.show ? "block" : "none" }}>
-
-                                        <Form.Field >
-                                            <label>Stare hasło</label>
+                                    <Form onSubmit={this.onSubmit} style={{ display: this.state.show ? "block" : "none" }}>
+                                        <label>Stare hasło</label>
+                                        <Form.Input type="password">
                                             <input placeholder='' />
-                                        </Form.Field>
-                                        <Form.Field >
-                                            <label>Nowe hasło</label>
+                                        </Form.Input>
+                                        <label>Nowe hasło</label>
+                                        <Form.Input type="password">
                                             <input placeholder='' />
-                                        </Form.Field>
-                                        <Form.Field >
-                                            <label>Potwierdź nowe hasło</label>
+                                        </Form.Input>
+                                        <label>Potwierdź nowe hasło</label>
+                                        <Form.Input type="password">
                                             <input placeholder='' />
-                                        </Form.Field>
+                                        </Form.Input>
+                                        <Button style={{ backgroundColor: "#CAE2FF" }} type='submit'>Zatwierdź nowe hasło</Button>
                                     </Form>
 
                                     <div style={{ display: this.state.show ? "none" : "block" }}>
+                                        <br />
                                         <h3><label> Damian Wnukowski</label></h3>
                                         <h4><label>Email: damian.wnukowski@email.com</label></h4>
                                     </div>
