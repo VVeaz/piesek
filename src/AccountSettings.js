@@ -8,21 +8,39 @@ import AppUnlogged from "./AppUnlogged";
 class AccountSettings extends Component {
     constructor(props) {
         super(props);
-        this.state = { show: false }
+        this.state = { show: false, passwordCurrent: "", password: "", passwordConfirm: "", correct: false, success: false, error: false }
     }
-    onClick = e => {
 
+    onClick = e => {
         this.setState({
             show: !this.state.show
         });
     };
+
+    componentDidUpdate() {
+        console.log(this.state.password.length > 7 && this.state.passwordConfirm.length > 7 && this.state.password == this.state.passwordConfirm)
+        if (!this.state.correct && this.state.password.length > 7 && this.state.passwordConfirm.length > 7 && this.state.password == this.state.passwordConfirm) {
+            this.setState({ correct: true })
+        }
+    }
+
+    onSubmit = e => {
+        axios.post('http://localhost:8080/api/user-account/change-password', {
+            "passwordCurrent": this.state.passwordCurrent,
+            "password": this.state.password,
+            "passwordConfirm": this.state.passwordConfirm
+        }).then(function (response) {
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
     render() {
         if (!axios.defaults.headers.common["Authorization"]) {
             return (<AppUnlogged />);
         }
         return (
-
-
             <div style={{ height: "100%" }}>
                 <Grid style={{ height: "100%", padding: 0, margin: 0 }}>
                     <Grid.Column stretched width={2} style={{ padding: 0, margin: 0 }}>
@@ -41,20 +59,21 @@ class AccountSettings extends Component {
                                             type='submit'>Zmień hasło</Button>
                                     </div>
                                     <h3 style={{ display: this.state.show ? "block" : "none" }}>Zmiana hasła</h3>
+
                                     <Form onSubmit={this.onSubmit} style={{ display: this.state.show ? "block" : "none" }}>
                                         <label>Stare hasło</label>
-                                        <Form.Input type="password">
+                                        <Form.Input type="password" value={this.state.passwordCurrent} onChange={e => this.setState({ passwordCurrent: e.target.value })}>
                                             <input placeholder='' />
                                         </Form.Input>
                                         <label>Nowe hasło</label>
-                                        <Form.Input type="password">
+                                        <Form.Input type="password" value={this.state.password} onChange={e => this.setState({ password: e.target.value })}>
                                             <input placeholder='' />
                                         </Form.Input>
                                         <label>Potwierdź nowe hasło</label>
-                                        <Form.Input type="password">
+                                        <Form.Input type="password" value={this.state.passwordConfirm} onChange={e => this.setState({ passwordConfirm: e.target.value })} >
                                             <input placeholder='' />
                                         </Form.Input>
-                                        <Button style={{ backgroundColor: "#CAE2FF" }} type='submit'>Zatwierdź nowe hasło</Button>
+                                        <Button style={{ backgroundColor: "#CAE2FF" }} type='submit' disabled={!this.state.correct} >Zatwierdź nowe hasło</Button>
                                     </Form>
 
                                     <div style={{ display: this.state.show ? "none" : "block" }}>
