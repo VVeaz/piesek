@@ -45,11 +45,13 @@ export default class SideMenu extends Component {
           <Menu.Item>
             <Menu.Header>Dla pracowników</Menu.Header>
             <Menu.Menu>
-              <Menu.Item
-                name="Katalog ze zwierzętami"
-                active={activeItem === "Katalog ze zwierzętami"}
-                onClick={this.handleItemClick}
-              />
+              <Link to="/animals-folder">
+                <Menu.Item
+                  name="Katalog ze zwierzętami"
+                  active={activeItem === "Katalog ze zwierzętami"}
+                  onClick={this.handleItemClick}
+                />
+              </Link>
               <Menu.Item
                 name="Harmonogram zdarzeń"
                 active={activeItem === "Harmonogram zdarzeń"}
