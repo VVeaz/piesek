@@ -3,6 +3,7 @@ import SideMenu from "./components/SideMenu";
 import { Button, Form, Grid } from "semantic-ui-react";
 import React, { Component } from 'react';
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import AppUnlogged from "./AppUnlogged";
 
 class AddAnimal extends Component {
@@ -39,9 +40,9 @@ class AddAnimal extends Component {
     }
 
     render() {
-        if (!axios.defaults.headers.common["Authorization"]) {
-            return (<AppUnlogged />);
-        }
+        // if (!axios.defaults.headers.common["Authorization"]) {
+        //     return (<AppUnlogged />);
+        // }
         return (
             <div style={{ height: "100%" }}>
                 <Grid style={{ height: "100%", padding: 0, margin: 0 }}>
@@ -52,44 +53,64 @@ class AddAnimal extends Component {
                         <div>
                             <h1>Dodawanie zwierzęcia</h1>
                             <hr />
-                            <Grid columns={3}>
+                            <Grid columns={2}>
                                 <Grid.Column>
                                     <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Udane dodanie.</p>
                                     <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem z dodaniem zwierzęcia.</p>
+
                                     <Form onSubmit={this.onSubmit}>
-                                        <div class="equal width fields">
-                                            <label style={{ marginRight: 5 }}>Imię</label>
-                                            <tr />
-                                            <input value={this.state.name} onChange={e => this.setState({ name: e.target.value })} placeholder='' />
-                                        </div>
-                                        <div class="equal width fields">
-                                            <label style={{ marginRight: 5 }}>Waga</label>
-                                            <input type="number" value={this.state.weight} onChange={e => this.setState({ weight: e.target.value })} placeholder='' />
-                                        </div>
-                                        <div class="equal width fields">
-                                            <label style={{ marginRight: 5 }}>Data urodzenia</label>
-                                            <input type="date" value={this.state.birthDate} onChange={e => this.setState({ birthDate: e.target.value })} placeholder='' />
-                                            <div style={{ marginLeft: 5 }} class="ui toggle checkbox">
-                                                <input type="checkbox" tabindex="0" onClick={() => { this.setState({ birthDateApproximated: !this.state.birthDateApproximated }) }} />
-                                                <label>Czy data przybliżona</label>
+                                        <div style={{ backgroundColor: "#E9E9E9" }} >
+                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
+                                                <label >Imię</label>
+                                                <input value={this.state.name} onChange={e => this.setState({ name: e.target.value })} placeholder='' />
+                                            </div>
+                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
+                                                <label >Waga</label>
+                                                <input type="number" value={this.state.weight} onChange={e => this.setState({ weight: e.target.value })} placeholder='' />
+                                            </div>
+                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
+                                                <label >Data urodzenia</label>
+                                                <input type="date" value={this.state.birthDate} onChange={e => this.setState({ birthDate: e.target.value })} placeholder='' />
+                                                <div style={{ marginTop: 5 }} class="ui toggle checkbox">
+                                                    <input type="checkbox" tabindex="0" onClick={() => { this.setState({ birthDateApproximated: !this.state.birthDateApproximated }) }} />
+                                                    <label>Czy data przybliżona</label>
+                                                </div>
+                                            </div>
+                                            <div class="inline field" align="right" style={{ marginRight: 75 }} >
+                                                <label >Gatunek</label>
+                                                <input value={this.state.species} onChange={e => this.setState({ spicies: e.target.value })} placeholder='' />
+                                            </div>
+                                            <div class="inline field" style={{ marginRight: 50, marginLeft: 50, }}>
+                                                <label>Notatki</label>
+                                                <textarea style={{ marginBottom: 50, }} value={this.state.description} onChange={e => this.setState({ description: e.target.value })}></textarea>
                                             </div>
                                         </div>
-                                        <div class="equal width fields">
-                                            <label style={{ marginRight: 5 }}>Gatunek</label>
-                                            <input value={this.state.species} onChange={e => this.setState({ spicies: e.target.value })} placeholder='' />
+                                        <div align="right" style={{ marginTop: 10 }} >
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} >
+
+
+                                                <i class="minus icon"></i>
+
+                                            </button>
+                                            <label style={{ marginRight: 10 }} > Anuluj</label>
+                                            <Link to="/add-animal">
+                                                <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type='submit' >
+
+
+                                                    <i class="check icon"></i>
+
+                                                </button>
+                                            </Link>
+                                            <label>Zapisz zwierzę</label>
                                         </div>
-                                        <div >
-                                            <label>Notatki</label>
-                                            <textarea value={this.state.description} onChange={e => this.setState({ description: e.target.value })}></textarea>
-                                        </div>
-                                        <Button style={{ backgroundColor: "#CAE2FF" }} type='submit' >Dodaj nowe zwierzęcie</Button>
                                     </Form>
+
                                 </Grid.Column>
                             </Grid>
                         </div>
                     </Grid.Column>
                 </Grid>
-            </div>
+            </div >
         );
     }
 }
