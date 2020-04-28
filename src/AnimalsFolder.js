@@ -1,10 +1,10 @@
 import "semantic-ui-css/semantic.min.css";
-import SideMenu from "./components/SideMenu";
-import { Button, Form, Grid } from "semantic-ui-react";
+//import SideMenu from "./components/SideMenu";
+//import { Button, Form, Grid } from "semantic-ui-react";
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import axios from 'axios'
-import AppUnlogged from "./AppUnlogged";
+//import axios from 'axios'
+//import AppUnlogged from "./AppUnlogged";
 
 class AnimalsFolder extends Component {
 
