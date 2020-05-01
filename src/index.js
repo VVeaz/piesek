@@ -10,6 +10,7 @@ import history from './history';
 import axios from 'axios';
 import AccountSettings from "./AccountSettings";
 import AddAnimal from "./AddAnimal";
+import EditAnimal from "./EditAnimal";
 import AnimalsFolder from "./AnimalsFolder"
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
@@ -24,6 +25,7 @@ const routing = (
             <Route path="/account-settings" component={AccountSettings} />
             <Route path="/animals-folder" component={AnimalsFolder} />
             <Route path="/add-animal" component={AddAnimal} />
+            <Route path="/edit-animal" component={EditAnimal} />
         </div>
     </Router>
 )
