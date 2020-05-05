@@ -21,12 +21,15 @@ class EditAnimal extends Component {
                 }
             }
         })
+        axios.get('http://localhost:8080/api/animal/1').then(function (response) {
+            console.log(response.data);
+        })
     }
 
     onSubmit = e => {
         var self = this;
         let animal = {
-            "id:": "1",
+            "id:": 1,   //id pobierane z linku przegladania
             "name": this.state.name,
             "weight": this.state.weight,
             "birthDate": this.state.birthDate,
@@ -45,8 +48,6 @@ class EditAnimal extends Component {
         formData.append("image", this.state.image)
 
         axios.put('http://localhost:8080/api/animal', formData, {
-            //'Access-Control-Allow-Origin': 'http://localhost:3000',
-            //'Access-Control-Allow-Credentials': 'true',
             'Content-Type': 'application/json',
         }).then(function (response) {
             self.setState({ success: true, error: false })
@@ -55,6 +56,7 @@ class EditAnimal extends Component {
             self.setState({ error: true, success: false })
             console.log(error);
         });
+
     }
 
     appendDisease() {
@@ -65,7 +67,6 @@ class EditAnimal extends Component {
         var newDisease = (newInput, newStartDate, newEndDate, newDescription)
         this.setState(prevState => ({ diseases: prevState.diseases.concat([newDisease]) }));
     }
-
 
     render() {
         if (!axios.defaults.headers.common["Authorization"]) {
@@ -88,8 +89,6 @@ class EditAnimal extends Component {
                                     <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ DO DODAWANIA ZWIERZĄT. <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
                                         <div style={{ backgroundColor: "#E9E9E9" }} >
-
-
                                             <i class="camera icon" />
                                             <input type="file" style={{ width: 237 }} onChange={e => this.setState({ image: e.target.files[0] })} />
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
@@ -167,8 +166,6 @@ class EditAnimal extends Component {
                                                         <i class="medkit icon"></i>
                                                         Naciśnij by dodać kolejną chorobę
                                                             </button>
-
-
                                                 </div>
                                             </div>
                                             <div class="inline field" style={{ marginRight: 50, marginLeft: 50, }}>
@@ -187,7 +184,6 @@ class EditAnimal extends Component {
                                             <label>Zapisz zwierzę</label>
                                         </div>
                                     </Form>
-
                                 </Grid.Column>
                             </Grid>
                         </div>
