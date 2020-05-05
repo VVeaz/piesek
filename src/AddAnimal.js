@@ -8,7 +8,7 @@ import AppUnlogged from "./AppUnlogged";
 class AddAnimal extends Component {
     constructor(props) {
         super(props);
-        this.state = { diseases: [], show: false, name: "", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false }
+        this.state = { image: null, diseases: [], pictureLocation: "", show: false, name: "", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false }
     }
 
     componentDidMount() {
@@ -22,33 +22,44 @@ class AddAnimal extends Component {
             }
         })
     }
+
     appendDisease() {
         var newInput = `input-${this.state.diseases.length}`;
-
         var newStartDate = `startDate-${this.state.diseases.length}`;
-
         var newEndDate = `endDate-${this.state.diseases.length}`;
-
         var newDescription = `description-${this.state.diseases.length}`;
-
         var newDisease = (newInput, newStartDate, newEndDate, newDescription)
         this.setState(prevState => ({ diseases: prevState.diseases.concat([newDisease]) }));
     }
+
     onSubmit = e => {
         var self = this;
-        axios.post('http://localhost:8080/api/animal', {
+        let animal = {
             "name": this.state.name,
             "weight": this.state.weight,
             "birthDate": this.state.birthDate,
             "description": this.state.description,
-            "spicies": this.state.spicies,
-            "birthDateApproximated": this.state.birthDateApproximated
+            "species": this.state.spicies,
+            "pictureLocation": "string",
+            "diseases": this.state.diseases,
+            "birthDateApproximated": this.state.birthDateApproximated,
+        }
+        let data = JSON.stringify(animal)
+        let formData = new FormData()
+        const blob = new Blob([data], {
+            type: 'application/json'
+        });
+        formData.append("animal", blob)
+        formData.append("image", this.state.image)
+
+        axios.post('http://localhost:8080/api/animal', formData, {
+            'Content-Type': 'application/json',
         }).then(function (response) {
             self.setState({ success: true, error: false })
-            //console.log(response);
+            console.log(response);
         }).catch(function (error) {
             self.setState({ error: true, success: false })
-            //console.log(error);
+            console.log(error);
         });
     }
 
@@ -74,7 +85,7 @@ class AddAnimal extends Component {
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
                                         <div style={{ backgroundColor: "#E9E9E9" }} >
                                             <i class="camera icon" />
-                                            <input type="file" style={{ width: 237 }} />
+                                            <input type="file" style={{ width: 237 }} onChange={e => this.setState({ image: e.target.files[0] })} />
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Imię</label>
                                                 <input onChange={e => this.setState({ name: e.target.value })} placeholder='' />
@@ -127,7 +138,7 @@ class AddAnimal extends Component {
                                                 </a>
                                                 <button class="ui basic button" onClick={() => this.appendDisease()}>
                                                     <i class="medkit icon"></i>
-                                                        Naciśnij by dodać kolejną chorobę
+                                                    Naciśnij by dodać kolejną chorobę
                                                             </button>
                                             </div>
 
