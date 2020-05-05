@@ -8,7 +8,7 @@ import AppUnlogged from "./AppUnlogged";
 class AddAnimal extends Component {
     constructor(props) {
         super(props);
-        this.state = { show: false, name: "", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false }
+        this.state = { diseases: [], show: false, name: "", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false }
     }
 
     componentDidMount() {
@@ -22,7 +22,18 @@ class AddAnimal extends Component {
             }
         })
     }
+    appendDisease() {
+        var newInput = `input-${this.state.diseases.length}`;
 
+        var newStartDate = `startDate-${this.state.diseases.length}`;
+
+        var newEndDate = `endDate-${this.state.diseases.length}`;
+
+        var newDescription = `description-${this.state.diseases.length}`;
+
+        var newDisease = (newInput, newStartDate, newEndDate, newDescription)
+        this.setState(prevState => ({ diseases: prevState.diseases.concat([newDisease]) }));
+    }
     onSubmit = e => {
         var self = this;
         axios.post('http://localhost:8080/api/animal', {
@@ -62,6 +73,8 @@ class AddAnimal extends Component {
                                     <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ DO DODAWANIA ZWIERZĄT. <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
                                         <div style={{ backgroundColor: "#E9E9E9" }} >
+                                            <i class="camera icon" />
+                                            <input type="file" style={{ width: 237 }} />
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Imię</label>
                                                 <input onChange={e => this.setState({ name: e.target.value })} placeholder='' />
@@ -82,6 +95,42 @@ class AddAnimal extends Component {
                                                 <label >Gatunek</label>
                                                 <input onChange={e => this.setState({ spicies: e.target.value })} placeholder='' />
                                             </div>
+                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
+                                                <a class="item">
+                                                    <div class="content">
+                                                        <div class="inline field">
+                                                            <div class="inline field" id="dynamicInput">
+                                                                <i class="ambulance icon"></i>
+                                                                {/* {this.state.inputs.map(input => <input key={input} />)}
+                                                                    {this.state.startDates.map(input => <input type="date" key={input} />)}
+                                                                    {this.state.endDates.map(input => <input type="date" key={input} />)} */}
+                                                                {this.state.diseases.map((index) => {
+                                                                    return (
+                                                                        <div class="inline field" style={{ marginLeft: 75 }}>
+                                                                            <i class="heartbeat icon"></i>
+                                                                            <label style={{ marginRight: 15 }}>Nazwa</label>
+                                                                            <input key={index} />
+                                                                            <label style={{ marginRight: 15 }}>Rozpoczęcie choroby</label>
+                                                                            <input type="date" key={index} />
+                                                                            <label style={{ marginRight: 15 }}>Zakończenie choroby</label>
+                                                                            <input type="date" key={index} />
+                                                                            <label >Opis choroby</label>
+                                                                            <textarea key={index} />
+                                                                        </div>
+                                                                    )
+                                                                })}
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </a>
+                                                <button class="ui basic button" onClick={() => this.appendDisease()}>
+                                                    <i class="medkit icon"></i>
+                                                        Naciśnij by dodać kolejną chorobę
+                                                            </button>
+                                            </div>
+
                                             <div class="inline field" style={{ marginRight: 50, marginLeft: 50, }}>
                                                 <label>Notatki</label>
                                                 <textarea style={{ marginBottom: 50, }} onChange={e => this.setState({ description: e.target.value })}></textarea>
