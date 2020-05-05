@@ -8,7 +8,7 @@ import AppUnlogged from "./AppUnlogged";
 class EditAnimal extends Component {
     constructor(props) {
         super(props);
-        this.state = { inputs: [], show: false, name: "", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false }
+        this.state = { diseases: [], show: false, name: "", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false }
     }
 
     componentDidMount() {
@@ -27,10 +27,20 @@ class EditAnimal extends Component {
 
     }
 
-    appendInput() {
-        var newInput = `input-${this.state.inputs.length}`;
-        this.setState(prevState => ({ inputs: prevState.inputs.concat([newInput]) }));
+    appendDisease() {
+        var newInput = `input-${this.state.diseases.length}`;
+
+        var newStartDate = `startDate-${this.state.diseases.length}`;
+
+        var newEndDate = `endDate-${this.state.diseases.length}`;
+
+        var newDescription = `description-${this.state.diseases.length}`;
+
+        var newDisease = (newInput, newStartDate, newEndDate, newDescription)
+        this.setState(prevState => ({ diseases: prevState.diseases.concat([newDisease]) }));
     }
+
+
     render() {
         if (!axios.defaults.headers.common["Authorization"]) {
             return (<AppUnlogged />);
@@ -84,24 +94,51 @@ class EditAnimal extends Component {
                                                     je ewentualnie edytowac) */}
                                                     <a class="item">
                                                         <div class="content">
-                                                            <div class="inline field">
+                                                            <div class="inline field" align="right" style={{ marginLeft: 75 }}>
+
                                                                 <i class="heartbeat icon"></i>
+                                                                <label style={{ marginRight: 15 }}>Nazwa</label>
                                                                 <input />
+                                                                <label style={{ marginRight: 15 }}>Rozpoczęcie choroby</label>
+                                                                <input type="date" />
+                                                                <label style={{ marginRight: 15 }}>Zakończenie choroby</label>
+                                                                <input type="date" />
+                                                                <label >Opis choroby</label>
+                                                                <textarea />
                                                             </div>
                                                         </div>
                                                     </a>
                                                     <a class="item">
                                                         <div class="content">
                                                             <div class="inline field">
-                                                                <div id="dynamicInput">
+                                                                <div class="inline field" id="dynamicInput">
                                                                     <i class="ambulance icon"></i>
-                                                                    {this.state.inputs.map(input => <input key={input} />)}
+                                                                    {/* {this.state.inputs.map(input => <input key={input} />)}
+                                                                    {this.state.startDates.map(input => <input type="date" key={input} />)}
+                                                                    {this.state.endDates.map(input => <input type="date" key={input} />)} */}
+                                                                    {this.state.diseases.map((index) => {
+                                                                        return (
+                                                                            <div class="inline field" style={{ marginLeft: 75 }}>
+                                                                                <i class="heartbeat icon"></i>
+                                                                                <label style={{ marginRight: 15 }}>Nazwa</label>
+                                                                                <input key={index} />
+                                                                                <label style={{ marginRight: 15 }}>Rozpoczęcie choroby</label>
+                                                                                <input type="date" key={index} />
+                                                                                <label style={{ marginRight: 15 }}>Zakończenie choroby</label>
+                                                                                <input type="date" key={index} />
+                                                                                <label >Opis choroby</label>
+                                                                                <textarea key={index} />
+                                                                            </div>
+                                                                        )
+                                                                    })}
+
                                                                 </div>
                                                             </div>
 
                                                         </div>
                                                     </a>
-                                                    <button onClick={() => this.appendInput()}>
+                                                    <button class="ui basic button" onClick={() => this.appendDisease()}>
+                                                        <i class="medkit icon"></i>
                                                         Naciśnij by dodać kolejną chorobę
                                                             </button>
 
