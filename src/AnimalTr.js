@@ -8,7 +8,7 @@ class AnimalTr extends React.Component {
             return (
                 <tr>
                     <td>{act['name']}</td>
-                    <td>{act['speceis']}</td>
+                    <td>{act['species']}</td>
                 </tr>
             )
         })

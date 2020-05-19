@@ -1,12 +1,11 @@
 import "semantic-ui-css/semantic.min.css";
 import SideMenu from "./components/SideMenu";
-import { Button, Form, Grid } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import AppUnlogged from "./AppUnlogged";
 import AnimalTr from './AnimalTr';
-import { request } from "https";
 
 class AnimalsFolder extends Component {
     state = { animals: [], name: "", species: "", maxPage: 1, page: 0, size: 10, sort: "id%2Cdesc", update: false }
@@ -87,7 +86,7 @@ class AnimalsFolder extends Component {
                                                 <th onClick={() => { this.sortBySpecies() }}>Gatunek</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody >
                                             <AnimalTr animal={this.state.animals} />
                                         </tbody>
                                     </table>
@@ -120,14 +119,9 @@ class AnimalsFolder extends Component {
                                 </Grid.Column>
                             </Grid>
                         </div>
-
                     </Grid.Column>
-
                 </Grid>
-
             </div >
-
-
         );
     }
 }
