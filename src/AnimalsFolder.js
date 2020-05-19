@@ -28,30 +28,45 @@ class AnimalsFolder extends Component {
                                     <table class="ui sortable celled table">
                                         <thead>
                                             <tr>
+                                                <th>
+                                                    <div class="ui category search">
+                                                        <div class="ui icon input">
+                                                            <input class="prompt" type="text" placeholder="Szukaj imienia..." />
+                                                            <i class="search icon"></i>
+                                                        </div>
+                                                        <div class="results"></div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="ui category search">
+                                                        <div class="ui icon input">
+                                                            <input class="prompt" type="text" placeholder="Szukaj gatunku..." />
+                                                            <i class="search icon"></i>
+                                                        </div>
+                                                        <div class="results"></div>
+                                                    </div>
+                                                </th>
+
+                                            </tr>
+                                            <tr>
+
                                                 <th>Imię</th>
+
                                                 <th>Gatunek</th>
-                                                <th>Data urodzenia</th>
-                                                <th>Data dodania</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>Simba</td>
                                                 <td>Lew</td>
-                                                <td>27.10.2001</td>
-                                                <td>27.01.2020</td>
                                             </tr>
                                             <tr>
                                                 <td>Leszek</td>
                                                 <td>Pies</td>
-                                                <td>27.10.2010</td>
-                                                <td>27.10.2019</td>
                                             </tr>
                                             <tr>
                                                 <td>Misiek</td>
                                                 <td>Kot</td>
-                                                <td>27.10.2011</td>
-                                                <td>27.10.2018</td>
                                             </tr>
                                         </tbody>
 
