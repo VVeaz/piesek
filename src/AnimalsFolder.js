@@ -5,8 +5,19 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import AppUnlogged from "./AppUnlogged";
+import AnimalTr from './AnimalTr';
+import { request } from "https";
 
 class AnimalsFolder extends Component {
+    state = { animals: [], name: "", species: "", page: 0, size: 10, sort: "id%2Cdesc" }
+
+    componentDidMount() {
+        var self = this;
+        axios.get('http://localhost:8080/api/animal?name=' + self.state.name + '&species=' + self.state.species + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
+            console.log(response)
+            self.setState({ animals: response.data.content })
+        })
+    }
 
     render() {
         if (!axios.defaults.headers.common["Authorization"]) {
@@ -56,7 +67,7 @@ class AnimalsFolder extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            {/* <tr>
                                                 <td>Simba</td>
                                                 <td>Lew</td>
                                             </tr>
@@ -67,7 +78,8 @@ class AnimalsFolder extends Component {
                                             <tr>
                                                 <td>Misiek</td>
                                                 <td>Kot</td>
-                                            </tr>
+                                            </tr> */}
+                                            <AnimalTr animal={this.state.animals} />
                                         </tbody>
 
                                     </table>
