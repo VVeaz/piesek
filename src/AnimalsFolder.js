@@ -14,7 +14,7 @@ class AnimalsFolder extends Component {
     componentDidMount() {
         var self = this;
         axios.get('http://localhost:8080/api/animal?name=' + self.state.name + '&species=' + self.state.species + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
-            console.log(response)
+            //console.log(response)
             self.setState({ animals: response.data.content, maxPage: response.data.totalPages - 1 })
         })
     }
@@ -23,11 +23,25 @@ class AnimalsFolder extends Component {
         if (this.state.update) {
             var self = this;
             axios.get('http://localhost:8080/api/animal?name=' + self.state.name + '&species=' + self.state.species + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
-                console.log(response)
+                //console.log(response)
                 self.setState({ animals: response.data.content, maxPage: response.data.totalPages - 1, update: false })
             })
         }
 
+    }
+
+    sortByName() {
+        if (this.state.sort == "name%2Casc")
+            this.setState({ sort: "name%2Cdesc", update: true })
+        else
+            this.setState({ sort: "name%2Casc", update: true })
+    }
+
+    sortBySpecies() {
+        if (this.state.sort == "species%2Casc")
+            this.setState({ sort: "species%2Cdesc", update: true })
+        else
+            this.setState({ sort: "species%2Casc", update: true })
     }
 
     render() {
@@ -52,7 +66,7 @@ class AnimalsFolder extends Component {
                                                 <th>
                                                     <div class="ui category search">
                                                         <div class="ui icon input">
-                                                            <input class="prompt" type="text" placeholder="Szukaj imienia..." />
+                                                            <input class="prompt" type="text" placeholder="Szukaj imienia..." onChange={e => this.setState({ name: e.target.value, update: true })} />
                                                             <i class="search icon"></i>
                                                         </div>
                                                         <div class="results"></div>
@@ -61,7 +75,7 @@ class AnimalsFolder extends Component {
                                                 <th>
                                                     <div class="ui category search">
                                                         <div class="ui icon input">
-                                                            <input class="prompt" type="text" placeholder="Szukaj gatunku..." />
+                                                            <input class="prompt" type="text" placeholder="Szukaj gatunku..." onChange={e => this.setState({ spacies: e.target.value, update: true })} />
                                                             <i class="search icon"></i>
                                                         </div>
                                                         <div class="results"></div>
@@ -69,14 +83,13 @@ class AnimalsFolder extends Component {
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <th>Imię</th>
-                                                <th>Gatunek</th>
+                                                <th onClick={() => { this.sortByName() }}>Imię</th>
+                                                <th onClick={() => { this.sortBySpecies() }}>Gatunek</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <AnimalTr animal={this.state.animals} />
                                         </tbody>
-
                                     </table>
                                     <div>
                                         <div style={{ float: "left" }}>
@@ -90,9 +103,9 @@ class AnimalsFolder extends Component {
                                         </div>
                                         <div style={{ float: "right" }}>
                                             <label>Liczba rekordów: </label>
-                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4" }} onClick={() => { this.setState({ size: 1, page: 0, update: true }) }}> 10</button>
-                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4" }} onClick={() => { this.setState({ size: 2, page: 0, update: true }) }}> 25</button>
-                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4" }} onClick={() => { this.setState({ size: 3, page: 0, update: true }) }}> 50</button>
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4" }} onClick={() => { this.setState({ size: 10, page: 0, update: true }) }}> 10</button>
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4" }} onClick={() => { this.setState({ size: 25, page: 0, update: true }) }}> 25</button>
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4" }} onClick={() => { this.setState({ size: 50, page: 0, update: true }) }}> 50</button>
                                         </div>
                                     </div>
                                     <br /> <br />
