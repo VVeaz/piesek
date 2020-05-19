@@ -9,14 +9,25 @@ import AnimalTr from './AnimalTr';
 import { request } from "https";
 
 class AnimalsFolder extends Component {
-    state = { animals: [], name: "", species: "", page: 0, size: 10, sort: "id%2Cdesc" }
+    state = { animals: [], name: "", species: "", maxPage: 1, page: 0, size: 10, sort: "id%2Cdesc", update: false }
 
     componentDidMount() {
         var self = this;
         axios.get('http://localhost:8080/api/animal?name=' + self.state.name + '&species=' + self.state.species + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
             console.log(response)
-            self.setState({ animals: response.data.content })
+            self.setState({ animals: response.data.content, maxPage: response.data.totalPages - 1 })
         })
+    }
+
+    componentDidUpdate() {
+        if (this.state.update) {
+            var self = this;
+            axios.get('http://localhost:8080/api/animal?name=' + self.state.name + '&species=' + self.state.species + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
+                console.log(response)
+                self.setState({ animals: response.data.content, maxPage: response.data.totalPages - 1, update: false })
+            })
+        }
+
     }
 
     render() {
@@ -35,7 +46,6 @@ class AnimalsFolder extends Component {
                             <hr />
                             <Grid columns={2}>
                                 <Grid.Column>
-
                                     <table class="ui sortable celled table">
                                         <thead>
                                             <tr>
@@ -57,41 +67,43 @@ class AnimalsFolder extends Component {
                                                         <div class="results"></div>
                                                     </div>
                                                 </th>
-
                                             </tr>
                                             <tr>
-
                                                 <th>Imię</th>
-
                                                 <th>Gatunek</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {/* <tr>
-                                                <td>Simba</td>
-                                                <td>Lew</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Leszek</td>
-                                                <td>Pies</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Misiek</td>
-                                                <td>Kot</td>
-                                            </tr> */}
                                             <AnimalTr animal={this.state.animals} />
                                         </tbody>
 
                                     </table>
-                                    <Link to="/add-animal">
-                                        <div align="right" style={{ marginTop: 10 }} >
+                                    <div>
+                                        <div style={{ float: "left" }}>
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4", margin: "0px 10px 0px 10px" }} onClick={() => { if (this.state.page > 0) { this.setState({ page: this.state.page - 1, update: true }) } }}>
+                                                <i class="arrow left icon"></i>
+                                            </button>
+                                            Strona {this.state.page + 1}
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4", margin: "0px 10px 0px 10px" }} onClick={() => { if (this.state.page < this.state.maxPage) { this.setState({ page: this.state.page + 1, update: true }) } }}>
+                                                <i class="arrow right icon"></i>
+                                            </button>
+                                        </div>
+                                        <div style={{ float: "right" }}>
+                                            <label>Liczba rekordów: </label>
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4" }} onClick={() => { this.setState({ size: 1, page: 0, update: true }) }}> 10</button>
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4" }} onClick={() => { this.setState({ size: 2, page: 0, update: true }) }}> 25</button>
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#d4d4d4" }} onClick={() => { this.setState({ size: 3, page: 0, update: true }) }}> 50</button>
+                                        </div>
+                                    </div>
+                                    <br /> <br />
+                                    <div align="right" style={{ marginTop: 10 }} >
+                                        <Link to="/add-animal">
                                             <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type="reset" >
                                                 <i class="plus icon"></i>
                                             </button>
                                             <label>Dodaj zwierzę</label>
-                                        </div>
-                                    </Link>
-
+                                        </Link>
+                                    </div>
                                 </Grid.Column>
                             </Grid>
                         </div>
@@ -100,7 +112,7 @@ class AnimalsFolder extends Component {
 
                 </Grid>
 
-            </div>
+            </div >
 
 
         );
