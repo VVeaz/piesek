@@ -85,10 +85,10 @@ class EditAccount extends Component {
                             <Grid columns={4}>
                                 <Grid.Column>
                                     <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Udane dodanie.</p>
-                                    <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem z dodaniem zwierzęcia.</p>
-                                    <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ DO DODAWANIA ZWIERZĄT. <br /> Wróć gdy otrzymasz taki przywilej. </p>
+                                    <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem .</p>
+                                    <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ . <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
-                                        <div style={{ backgroundColor: "#E9E9E9" }} >
+                                        <div style={{ backgroundColor: "#E9E9E9", borderRadius: 15 }} >
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label style={{ marginTop: 15 }} >Imię i nazwisko</label>
                                                 <input onChange={e => this.setState({ name: e.target.value })} placeholder='' />
