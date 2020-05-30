@@ -57,8 +57,12 @@ class Account extends Component {
                                         <div style={{ backgroundColor: "#E9E9E9", borderRadius: 15 }} >
 
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
-                                                <label >Imię i nazwisko</label>
-                                                <label style={{ color: "#918383" }}>Szymon Stasiak</label>
+                                                <label >Imię</label>
+                                                <label style={{ color: "#918383" }}>Szymon</label>
+                                            </div>
+                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
+                                                <label >Nazwisko</label>
+                                                <label style={{ color: "#918383" }}>Stasiak</label>
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Rola</label>
