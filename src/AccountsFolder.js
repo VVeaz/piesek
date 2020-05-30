@@ -120,11 +120,12 @@ class AccountsFolder extends Component {
                                     <br /> <br />
                                     <div align="right" style={{ marginTop: 10 }} >
                                         <Link to="/register">
-                                            <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type="reset" >
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }}  >
                                                 <i class="plus icon"></i>
                                             </button>
-                                            <label>Dodaj konto</label>
                                         </Link>
+                                        <label>Dodaj konto</label>
+
                                     </div>
                                 </Grid.Column>
                             </Grid>
