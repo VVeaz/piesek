@@ -1,14 +1,19 @@
 import "semantic-ui-css/semantic.min.css";
 import SideMenu from "./components/SideMenu";
-import { Form, Grid } from "semantic-ui-react";
+import { Form, Grid, Select } from "semantic-ui-react";
 import React, { Component } from 'react';
 import axios from 'axios'
 import AppUnlogged from "./AppUnlogged";
 
 class EditAccount extends Component {
+
     constructor(props) {
         super(props);
-        this.state = { image: null, diseases: [], pictureLocation: "", show: false, name: "", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false }
+        this.roleOptions = [
+            { key: 'u', text: 'Pracownik', value: 'USER' },
+            { key: 'a', text: 'Admin', value: 'ADMINISTRATOR' }
+        ]
+        this.state = { email: '', name: '', lastName: '', role: '' }
     }
 
     componentDidMount() {
@@ -25,7 +30,13 @@ class EditAccount extends Component {
             console.log(response.data);
         })
     }
-
+    inputChangeHandler(e, name, value) {
+        if (name === 'role') {
+            this.state[name] = value;
+        } else {
+            this.state[name] = e.target.value;
+        }
+    }
     onSubmit = e => {
         var self = this;
         let animal = {
@@ -59,14 +70,6 @@ class EditAccount extends Component {
 
     }
 
-    appendDisease() {
-        var newInput = `input-${this.state.diseases.length}`;
-        var newStartDate = `startDate-${this.state.diseases.length}`;
-        var newEndDate = `endDate-${this.state.diseases.length}`;
-        var newDescription = `description-${this.state.diseases.length}`;
-        var newDisease = (newInput, newStartDate, newEndDate, newDescription)
-        this.setState(prevState => ({ diseases: prevState.diseases.concat([newDisease]) }));
-    }
 
     render() {
         if (!axios.defaults.headers.common["Authorization"]) {
@@ -89,23 +92,29 @@ class EditAccount extends Component {
                                     <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ . <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
                                         <div style={{ backgroundColor: "#E9E9E9", borderRadius: 15 }} >
-                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
-                                                <label style={{ marginTop: 15 }} >Imię i nazwisko</label>
-                                                <input onChange={e => this.setState({ name: e.target.value })} placeholder='' />
-                                            </div>
-                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
-                                                <label >Rola</label>
 
-                                            </div>
-                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
-                                                <label >Data urodzenia</label>
+                                            <Form.Field style={{ marginRight: 75, marginLeft: 75 }}>
+                                                <label style={{ marginTop: 15 }} >Imię</label>
+                                                <input onChange={e => this.setState({ name: e.target.value })} placeholder='' />
+                                            </Form.Field>
+                                            <Form.Field style={{ marginRight: 75, marginLeft: 75 }}>
+                                                <label style={{ marginTop: 15 }} >Nazwisko</label>
+                                                <input onChange={e => this.setState({ name: e.target.value })} placeholder='' />
+                                            </Form.Field>
+                                            <Form.Field style={{ marginLeft: 75, marginRight: 75, width: 5 }}
+                                                control={Select}
+                                                options={this.roleOptions}
+                                                placeholder='Rola'
+                                            />
+                                            <Form.Field style={{ marginRight: 75, marginLeft: 75 }}>
+                                                <label >Data zatrudnienia</label>
                                                 <input type="date" onChange={e => this.setState({ birthDate: e.target.value })} placeholder='' />
 
-                                            </div>
-                                            <div class="inline field" align="right" style={{ marginRight: 75 }} >
+                                            </Form.Field>
+                                            <Form.Field style={{ marginRight: 75, marginLeft: 75 }} >
                                                 <label >E-mail</label>
                                                 <input style={{ marginBottom: 15 }} onChange={e => this.setState({ spicies: e.target.value })} placeholder='' />
-                                            </div>
+                                            </Form.Field>
 
 
                                         </div>
