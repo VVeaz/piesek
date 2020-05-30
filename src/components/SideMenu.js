@@ -69,11 +69,13 @@ export default class SideMenu extends Component {
                   onClick={this.handleItemClick}
                 />
               </Link>
-              <Menu.Item
-                name="Zarządzaj kontami"
-                active={activeItem === "Zarządzaj kontami"}
-                onClick={this.handleItemClick}
-              />
+              <Link to="/accounts-folder">
+                <Menu.Item
+                  name="Zarządzaj kontami"
+                  active={activeItem === "Zarządzaj kontami"}
+                  onClick={this.handleItemClick}
+                />
+              </Link>
             </Menu.Menu>
           </Menu.Item>
         </Container>
