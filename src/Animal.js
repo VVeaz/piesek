@@ -42,7 +42,9 @@ class Animal extends Component {
                     <Grid.Column stretched width={14}>
                         <div>
                             <Link to="/animals-folder">
-                                <label><i class="caret left icon"></i> Powrót do katalogu</label>
+                                <button class="ui labeled icon button">
+                                    <i class="caret left icon"></i> Powrót do katalogu
+                                    </button>
                             </Link>
                             <hr />
 
@@ -52,7 +54,7 @@ class Animal extends Component {
                                     <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem z dodaniem zwierzęcia.</p>
                                     <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ DO DODAWANIA ZWIERZĄT. <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
-                                        <div style={{ backgroundColor: "#E9E9E9" }} >
+                                        <div style={{ backgroundColor: "#E9E9E9", borderRadius: 15 }} >
 
 
 

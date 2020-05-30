@@ -83,7 +83,7 @@ class AddAnimal extends Component {
                                     <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem z dodaniem zwierzęcia.</p>
                                     <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ DO DODAWANIA ZWIERZĄT. <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
-                                        <div style={{ backgroundColor: "#E9E9E9" }} >
+                                        <div style={{ backgroundColor: "#E9E9E9", borderRadius: 15 }} >
                                             <i class="camera icon" />
                                             <input type="file" style={{ width: 237 }} onChange={e => this.setState({ image: e.target.files[0] })} />
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>

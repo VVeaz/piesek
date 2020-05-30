@@ -88,7 +88,7 @@ class EditAnimal extends Component {
                                     <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem z dodaniem zwierzęcia.</p>
                                     <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ DO DODAWANIA ZWIERZĄT. <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
-                                        <div style={{ backgroundColor: "#E9E9E9" }} >
+                                        <div style={{ backgroundColor: "#E9E9E9", borderRadius: 15 }} >
                                             <i class="camera icon" />
                                             <input type="file" style={{ width: 237 }} onChange={e => this.setState({ image: e.target.files[0] })} />
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
@@ -123,11 +123,11 @@ class EditAnimal extends Component {
 
                                                                 <i class="heartbeat icon"></i>
                                                                 <label style={{ marginRight: 15 }}>Nazwa</label>
-                                                                <input />
-                                                                <label style={{ marginRight: 15 }}>Rozpoczęcie choroby</label>
-                                                                <input type="date" />
-                                                                <label style={{ marginRight: 15 }}>Zakończenie choroby</label>
-                                                                <input type="date" />
+                                                                <input style={{ marginBottom: 5 }} /><br />
+                                                                <label style={{ marginRight: 15, marginBottom: 5 }}>Rozpoczęcie choroby</label>
+                                                                <input style={{ marginBottom: 5 }} type="date" /> <br />
+                                                                <label style={{ marginRight: 15, marginBottom: 5 }}>Zakończenie choroby</label>
+                                                                <input style={{ marginBottom: 5 }} type="date" /><br />
                                                                 <label >Opis choroby</label>
                                                                 <textarea />
                                                             </div>
@@ -146,11 +146,11 @@ class EditAnimal extends Component {
                                                                             <div class="inline field" style={{ marginLeft: 75 }}>
                                                                                 <i class="heartbeat icon"></i>
                                                                                 <label style={{ marginRight: 15 }}>Nazwa</label>
-                                                                                <input key={index} />
+                                                                                <input style={{ marginBottom: 5 }} key={index} /> <br />
                                                                                 <label style={{ marginRight: 15 }}>Rozpoczęcie choroby</label>
-                                                                                <input type="date" key={index} />
+                                                                                <input style={{ marginBottom: 5 }} type="date" key={index} /> <br />
                                                                                 <label style={{ marginRight: 15 }}>Zakończenie choroby</label>
-                                                                                <input type="date" key={index} />
+                                                                                <input style={{ marginBottom: 5 }} type="date" key={index} /> <br />
                                                                                 <label >Opis choroby</label>
                                                                                 <textarea key={index} />
                                                                             </div>
@@ -162,7 +162,7 @@ class EditAnimal extends Component {
 
                                                         </div>
                                                     </a>
-                                                    <button class="ui basic button" onClick={() => this.appendDisease()}>
+                                                    <button class="ui labeled icon button" onClick={() => this.appendDisease()}>
                                                         <i class="medkit icon"></i>
                                                         Naciśnij by dodać kolejną chorobę
                                                             </button>
