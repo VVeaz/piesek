@@ -9,10 +9,12 @@ import { Link } from 'react-router-dom'
 class Account extends Component {
     constructor(props) {
         super(props);
-        this.state = { inputs: [], show: false, name: "", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false }
+        this.state = { inputs: [], id: "0", show: false, name: "", lastName: "", role: "", email: "", createdDate: "", birthDateApproximated: false, permissons: false, success: false, error: false }
     }
 
     componentDidMount() {
+        const { id } = this.props.match.params
+
         var self = this;
         axios.get('http://localhost:8080/api/role/my-permissions').then(function (response) {
             var perm;
@@ -22,6 +24,15 @@ class Account extends Component {
                 }
             }
         })
+        //if (self.state.permissons == true) {
+        axios.get('http://localhost:8080/api/user-account/' + id).then(function (response) {
+            //console.log(response)
+            self.setState({ id: response.data["id"], name: response.data["name"], lastName: response.data["lastName"], role: response.data["role"], email: response.data["email"], createdDate: response.data["createdDate"] })
+        }).catch(function (error) {
+            self.setState({ permissons: false })
+            //console.log("PROBLEM!" + error)
+        })
+        //}
     }
 
     onSubmit = e => {
@@ -50,32 +61,32 @@ class Account extends Component {
 
                             <Grid columns={4}>
                                 <Grid.Column>
-                                    <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Udane dodanie.</p>
-                                    <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem z dodaniem zwierzęcia.</p>
-                                    <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ DO DODAWANIA ZWIERZĄT. <br /> Wróć gdy otrzymasz taki przywilej. </p>
+                                    <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Udana edycja.</p>
+                                    <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem</p>
+                                    <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ. <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
                                         <div style={{ backgroundColor: "#E9E9E9", borderRadius: 15 }} >
 
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Imię</label>
-                                                <label style={{ color: "#918383" }}>Szymon</label>
+                                                <label style={{ color: "#918383" }}>{this.state.name}</label>
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Nazwisko</label>
-                                                <label style={{ color: "#918383" }}>Stasiak</label>
+                                                <label style={{ color: "#918383" }}>{this.state.lastName}</label>
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Rola</label>
-                                                <label style={{ color: "#918383" }}>Wolontariusz</label>
+                                                <label style={{ color: "#918383" }}>{this.state.role}</label>
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label>Data zatrudnienia</label>
-                                                <label style={{ color: "#918383" }}>25.09.2006</label>
+                                                <label style={{ color: "#918383" }}>{this.state.createdDate}</label>
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }} >
                                                 <label >E-mail</label>
-                                                <label style={{ color: "#918383" }}>sstasiak@wp.pl</label>                                            </div>
-
+                                                <label style={{ color: "#918383" }}>{this.state.email}</label>
+                                            </div>
                                         </div>
                                         <div align="right" style={{ marginTop: 10 }} >
                                             <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="reset" >
