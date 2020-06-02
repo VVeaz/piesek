@@ -5,15 +5,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import AppUnlogged from "./AppUnlogged";
-import AnimalTr from './AnimalTr';
+import AccountTr from './AccountTr';
 
 class AccountsFolder extends Component {
-    state = { animals: [], name: "", species: "", maxPage: 1, page: 0, size: 10, sort: "id%2Cdesc", update: false }
+    state = { animals: [], name: "", lastName: "", role: "", email: "", maxPage: 1, page: 0, size: 10, sort: "id%2Cdesc", update: false }
 
     componentDidMount() {
         var self = this;
-        axios.get('http://localhost:8080/api/animal?name=' + self.state.name + '&species=' + self.state.species + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
-            //console.log(response)
+        axios.get('http://localhost:8080/api/user-account??name=' + self.state.name + '&lastName=' + self.state.lastName + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
+            console.log(response)
             self.setState({ animals: response.data.content, maxPage: response.data.totalPages - 1 })
         })
     }
@@ -21,8 +21,8 @@ class AccountsFolder extends Component {
     componentDidUpdate() {
         if (this.state.update) {
             var self = this;
-            axios.get('http://localhost:8080/api/animal?name=' + self.state.name + '&species=' + self.state.species + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
-                //console.log(response)
+            axios.get('http://localhost:8080/api/user-account??name=' + self.state.name + '&lastName=' + self.state.lastName + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
+                console.log(response)
                 self.setState({ animals: response.data.content, maxPage: response.data.totalPages - 1, update: false })
             })
         }
@@ -36,11 +36,25 @@ class AccountsFolder extends Component {
             this.setState({ sort: "name%2Casc", update: true })
     }
 
-    sortBySpecies() {
-        if (this.state.sort == "species%2Casc")
-            this.setState({ sort: "species%2Cdesc", update: true })
+    sortByLastName() {
+        if (this.state.sort == "lastname%2Casc")
+            this.setState({ sort: "lastName%2Cdesc", update: true })
         else
-            this.setState({ sort: "species%2Casc", update: true })
+            this.setState({ sort: "lastName%2Casc", update: true })
+    }
+
+    sortByRole() {
+        if (this.state.sort == "role%2Casc")
+            this.setState({ sort: "role%2Cdesc", update: true })
+        else
+            this.setState({ sort: "role%2Casc", update: true })
+    }
+
+    sortByEmail() {
+        if (this.state.sort == "email%2Casc")
+            this.setState({ sort: "email%2Cdesc", update: true })
+        else
+            this.setState({ sort: "email%2Casc", update: true })
     }
 
     render() {
@@ -65,7 +79,7 @@ class AccountsFolder extends Component {
                                                 <th>
                                                     <div class="ui category search">
                                                         <div class="ui icon input">
-                                                            <input class="prompt" type="text" placeholder="Szukaj imienia i nazwiska..." onChange={e => this.setState({ name: e.target.value, update: true })} />
+                                                            <input class="prompt" type="text" placeholder="Szukaj imienia..." onChange={e => this.setState({ name: e.target.value, update: true })} />
                                                             <i class="search icon"></i>
                                                         </div>
                                                         <div class="results"></div>
@@ -74,7 +88,7 @@ class AccountsFolder extends Component {
                                                 <th>
                                                     <div class="ui category search">
                                                         <div class="ui icon input">
-                                                            <input class="prompt" type="text" placeholder="Szukaj roli..." onChange={e => this.setState({ spacies: e.target.value, update: true })} />
+                                                            <input class="prompt" type="text" placeholder="Szukaj nazwiska..." onChange={e => this.setState({ lastName: e.target.value, update: true })} />
                                                             <i class="search icon"></i>
                                                         </div>
                                                         <div class="results"></div>
@@ -83,7 +97,16 @@ class AccountsFolder extends Component {
                                                 <th>
                                                     <div class="ui category search">
                                                         <div class="ui icon input">
-                                                            <input class="prompt" type="text" placeholder="Szukaj e-maila..." onChange={e => this.setState({ spacies: e.target.value, update: true })} />
+                                                            <input class="prompt" type="text" placeholder="Szukaj roli..." onChange={e => this.setState({ role: e.target.value, update: true })} />
+                                                            <i class="search icon"></i>
+                                                        </div>
+                                                        <div class="results"></div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="ui category search">
+                                                        <div class="ui icon input">
+                                                            <input class="prompt" type="text" placeholder="Szukaj e-maila..." onChange={e => this.setState({ email: e.target.value, update: true })} />
                                                             <i class="search icon"></i>
                                                         </div>
                                                         <div class="results"></div>
@@ -91,13 +114,14 @@ class AccountsFolder extends Component {
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <th onClick={() => { this.sortByName() }}>Imię i nazwisko</th>
-                                                <th onClick={() => { this.sortBySpecies() }}>Rola</th>
-                                                <th>E-mail</th>
+                                                <th onClick={() => { this.sortByName() }}>Imię</th>
+                                                <th onClick={() => { this.sortByLastName() }}>Nazwisko</th>
+                                                <th onClick={() => { this.sortByRole() }}>Rola</th>
+                                                <th onClick={() => { this.sortByEmail() }}>E-mail</th>
                                             </tr>
                                         </thead>
                                         <tbody >
-                                            <AnimalTr animal={this.state.animals} />
+                                            <AccountTr accounts={this.state.animals} />
                                         </tbody>
                                     </table>
                                     <div>
