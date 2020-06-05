@@ -32,14 +32,17 @@ export default class SideMenu extends Component {
                   name="Ustawienia konta"
                   active={activeItem === "Ustawienia konta"}
                   onClick={this.handleItemClick}
-                />
+                >
+                  Ustawienia konta
+                </Menu.Item>
               </Link>
+
               <Menu.Item
-                name="Powiadomienia"
-                active={activeItem === "Powiadomienia"}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item name="Wyloguj się" onClick={e => { localStorage.setItem('Authorization', ""); window.location.reload(); }} />
+                name="Wyloguj się"
+                onClick={e => { localStorage.setItem('Authorization', ""); window.location.reload(); }}
+              >
+                Wyloguj się
+                </Menu.Item>
             </Menu.Menu>
           </Menu.Item>
           <Menu.Item>
@@ -50,13 +53,11 @@ export default class SideMenu extends Component {
                   name="Katalog ze zwierzętami"
                   active={activeItem === "Katalog ze zwierzętami"}
                   onClick={this.handleItemClick}
-                />
+                >
+                  Katalog ze zwierzętami
+                </Menu.Item>
               </Link>
-              <Menu.Item
-                name="Harmonogram zdarzeń"
-                active={activeItem === "Harmonogram zdarzeń"}
-                onClick={this.handleItemClick}
-              />
+
             </Menu.Menu>
           </Menu.Item>
           <Menu.Item>
@@ -67,14 +68,18 @@ export default class SideMenu extends Component {
                   name="Zarejestruj nowego pracownika"
                   active={activeItem === "Zarejestruj nowego pracownika"}
                   onClick={this.handleItemClick}
-                />
+                >
+                  Zarejestruj nowego pracownika
+                </Menu.Item>
               </Link>
               <Link to="/accounts-folder">
                 <Menu.Item
                   name="Zarządzaj kontami"
                   active={activeItem === "Zarządzaj kontami"}
                   onClick={this.handleItemClick}
-                />
+                >
+                  Zarządzaj kontami
+                </Menu.Item>
               </Link>
             </Menu.Menu>
           </Menu.Item>
