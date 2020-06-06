@@ -27,7 +27,8 @@ class Account extends Component {
         //if (self.state.permissons == true) {
         axios.get('http://localhost:8080/api/user-account/' + id).then(function (response) {
             //console.log(response)
-            self.setState({ id: response.data["id"], name: response.data["name"], lastName: response.data["lastName"], role: response.data["role"], email: response.data["email"], createdDate: response.data["createdDate"] })
+            self.setState({ id: response.data["id"], name: response.data["name"], lastName: response.data["lastName"], role: response.data["role"], email: response.data["email"], createdDate: response.data["createdDate"].substring(0, 10) })
+
         }).catch(function (error) {
             self.setState({ permissons: false })
             //console.log("PROBLEM!" + error)
@@ -81,7 +82,7 @@ class Account extends Component {
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label>Data zatrudnienia</label>
-                                                <label style={{ color: "#918383" }}>{this.state.createdDate}</label>
+                                                <label style={{ color: "#918383" }}>{((this.state.createdDate))}</label>
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }} >
                                                 <label >E-mail</label>
