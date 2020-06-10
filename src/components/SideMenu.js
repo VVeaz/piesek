@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { Menu, Container, Image } from "semantic-ui-react";
 import { Link } from 'react-router-dom'
 import icon from "../logo.png";
+import axios from 'axios'
 
 export default class SideMenu extends Component {
-  state = {};
+  state = { name: "", lastName: "" };
   menuStyle = {
     border: 0,
     boxShadow: "none",
@@ -13,6 +14,28 @@ export default class SideMenu extends Component {
     height: "100vh",
     width: "100%"
   };
+  componentDidMount() {
+
+    var self = this;
+    axios.get('http://localhost:8080/api/role/my-permissions').then(function (response) {
+      var perm;
+      for (perm of response.data) {
+        if (perm === "ROLE_MANAGE_OWN_ACCOUNT") {
+          self.setState({ permissons: true })
+        }
+      }
+    })
+    //if (self.state.permissons == true) {
+    axios.get('http://localhost:8080/api/user-account/me').then(function (response) {
+      //console.log(response)
+      self.setState({ name: response.data["name"], lastName: response.data["lastName"] })
+
+    }).catch(function (error) {
+      self.setState({ permissons: false })
+      //console.log("PROBLEM!" + error)
+    })
+    //}
+  }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
@@ -25,7 +48,7 @@ export default class SideMenu extends Component {
           <Menu.Item>
             <Link to="/"> <Image src={icon}></Image></Link>
             <Menu.Header>Zalogowany jako:</Menu.Header>
-            <Menu.Header>Damian Wnukowski</Menu.Header>
+            <Menu.Header>{this.state.name} {this.state.lastName}</Menu.Header>
             <Menu.Menu>
               <Link to="/account-settings">
                 <Menu.Item
