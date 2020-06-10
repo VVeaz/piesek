@@ -9,10 +9,13 @@ import { Link } from 'react-router-dom'
 class Animal extends Component {
     constructor(props) {
         super(props);
-        this.state = { inputs: [], show: false, name: "", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false }
+        this.state = { inputs: [], id: "0", show: false, name: "", weight: "", birthDate: "", description: "", species: "", birthDateApproximated: false, permissons: false, success: false, error: false }
+        this.exactDate = "Przybliżona"
     }
 
     componentDidMount() {
+        const { id } = this.props.match.params
+
         var self = this;
         axios.get('http://localhost:8080/api/role/my-permissions').then(function (response) {
             var perm;
@@ -22,6 +25,28 @@ class Animal extends Component {
                 }
             }
         })
+
+        axios.get('http://localhost:8080/api/animal/' + id).then(function (response) {
+            //console.log(response)
+            self.setState({
+                id: response.data["id"],
+                name: response.data["name"],
+                weight: response.data["weight"],
+                birthDate: response.data["birthDate"].substring(0, 10),
+                description: response.data["description"],
+                species: response.data["species"],
+                birthDateApproximated: response.data["birthDateApproximated"]
+            })
+
+        }).catch(function (error) {
+            self.setState({ permissons: false })
+            //console.log("PROBLEM!" + error)
+        })
+        console.log(this.state.birthDateApproximated)
+        if (this.state.birthDateApproximated === false) {
+            //console.log(this.state.birthDateApproximated)
+            this.exactDate = "Dokładna"
+        }
     }
 
     onSubmit = e => {
@@ -62,21 +87,22 @@ class Animal extends Component {
 
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Imię</label>
-                                                <label>Simba</label>
+                                                <label style={{ color: "#918383" }}>{this.state.name}</label>
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Waga</label>
-                                                <label>5</label>
+                                                <label style={{ color: "#918383" }}>{this.state.weight}</label>
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Data urodzenia</label>
-                                                <label>25.09.2006</label>
+                                                <label style={{ color: "#918383" }}>{this.state.birthDate}</label>
                                                 <tr />
-                                                <label>Dokładna</label>
+
+                                                <label style={{ color: "#918383" }}>{this.exactDate}</label>
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }} >
                                                 <label >Gatunek</label>
-                                                <label>Lew</label>                                            </div>
+                                                <label style={{ color: "#918383" }}>{this.state.species}</label>                                           </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label>Choroby</label>
                                                 <div class="ui list">
@@ -94,8 +120,7 @@ class Animal extends Component {
                                             </div>
                                             <div class="inline field" style={{ marginRight: 50, marginLeft: 50, }}>
                                                 <label>Notatki</label>
-                                                <textarea style={{ marginBottom: 50, }} onChange={e => this.setState({ description: e.target.value })}></textarea>
-                                            </div>
+                                                <label style={{ color: "#918383", marginBottom: 20 }}>{this.state.description}</label>                                            </div>
                                         </div>
                                         <div align="right" style={{ marginTop: 10 }} >
                                             <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="reset" >
