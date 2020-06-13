@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 class Account extends Component {
     constructor(props) {
         super(props);
-        this.state = { inputs: [], id: "0", show: false, name: "", lastName: "", role: "", email: "", createdDate: "", birthDateApproximated: false, permissons: false, success: false, error: false }
+        this.state = { inputs: [], id: "0", show: false, name: "", lastName: "", role: "", email: "", createdDate: "", birthDateApproximated: false, permissons: false, success: false, error: false, amI: false }
     }
 
     componentDidMount() {
@@ -34,6 +34,13 @@ class Account extends Component {
             //console.log("PROBLEM!" + error)
         })
         //}
+        axios.get('http://localhost:8080/api/user-account/me').then(function (response) {
+            console.log(response)
+            if (response.data["email"] == self.state.email) {
+                self.setState({ amI: true })
+            }
+
+        })
     }
 
     onSubmit = e => {
@@ -90,14 +97,18 @@ class Account extends Component {
                                             </div>
                                         </div>
                                         <div align="right" style={{ marginTop: 10 }} >
-                                            <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="reset" >
-                                                <i class="minus icon"></i>
-                                            </button>
-                                            <label style={{ marginRight: 10 }} > Usuń konto</label>
-                                            <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type='submit' >
-                                                <i class="check icon"></i>
-                                            </button>
-                                            <label>Edytuj konto</label>
+                                            <span style={{ display: this.state.amI ? "none" : "inline" }}>
+                                                <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="reset" >
+                                                    <i class="minus icon"></i>
+                                                </button>
+                                                <label style={{ marginRight: 10 }} > Usuń konto</label>
+                                            </span>
+                                            <span>
+                                                <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type='submit' >
+                                                    <i class="check icon"></i>
+                                                </button>
+                                                <label>Edytuj konto</label>
+                                            </span>
                                         </div>
                                     </Form>
 
