@@ -8,7 +8,7 @@ import AppUnlogged from "./AppUnlogged";
 class AccountSettings extends Component {
     constructor(props) {
         super(props);
-        this.state = { email: "", name: "", lastName: "", show: false, currentPassword: "", password: "", passwordConfirm: "", correct: false, success: false, error: false }
+        this.state = { email: "", name: "", lastName: "", show: false, currentPassword: "", password: "", passwordConfirm: "", correct: false, success: false, error: false, errorMessage: "" }
     }
 
     onClick = e => {
@@ -54,18 +54,26 @@ class AccountSettings extends Component {
     }
 
     onSubmit = e => {
-        var self = this;
-        axios.post('http://localhost:8080/api/user-account/change-password', {
-            "currentPassword": this.state.currentPassword,
-            "password": this.state.password,
-            "passwordConfirm": this.state.passwordConfirm
-        }).then(function (response) {
-            self.setState({ success: true, show: false, currentPassword: "", password: "", passwordConfirm: "", error: false, correct: false })
-            //console.log(response);
-        }).catch(function (error) {
-            self.setState({ error: true, currentPassword: "", correct: false })
-            //console.log(error);
-        });
+        this.setState({ errorMessage: "Podano niepoprawne stare hasło" })
+        if (this.state.password.length <= 7) {
+            this.setState({ error: true, errorMessage: "Hasło musi mieć conajmniej 8 znaków" })
+        } else if (this.state.password !== this.state.passwordConfirm) {
+            this.setState({ error: true, errorMessage: "Nowe hasło i hasło potwierdzające muszą być identyczne" })
+        } else {
+
+            var self = this;
+            axios.post('http://localhost:8080/api/user-account/change-password', {
+                "currentPassword": this.state.currentPassword,
+                "password": this.state.password,
+                "passwordConfirm": this.state.passwordConfirm
+            }).then(function (response) {
+                self.setState({ success: true, show: false, currentPassword: "", password: "", passwordConfirm: "", error: false, correct: false })
+                //console.log(response);
+            }).catch(function (error) {
+                self.setState({ error: true, currentPassword: "", correct: false })
+                //console.log(error);
+            });
+        }
     }
 
     render() {
@@ -90,7 +98,7 @@ class AccountSettings extends Component {
                                             type='submit'>Zmień hasło</Button>
                                     </div>
                                     <h3 style={{ display: this.state.show ? "block" : "none" }}>Zmiana hasła</h3>
-                                    <p style={{ display: this.state.error && this.state.show ? "block" : "none", color: "red" }}>Niezgodność: Nie udało się zmienić hasła...</p>
+                                    <p style={{ display: this.state.error && this.state.show ? "block" : "none", color: "red" }}>{this.state.errorMessage}</p>
 
                                     <Form onSubmit={this.onSubmit} style={{ display: this.state.show ? "block" : "none" }}>
                                         <label>Stare hasło</label>
@@ -105,7 +113,7 @@ class AccountSettings extends Component {
                                         <Form.Input type="password" value={this.state.passwordConfirm} onChange={e => this.setState({ passwordConfirm: e.target.value })} >
                                             <input placeholder='' />
                                         </Form.Input>
-                                        <Button style={{ backgroundColor: "#CAE2FF" }} type='submit' disabled={!this.state.correct} >Zatwierdź nowe hasło</Button>
+                                        <Button style={{ backgroundColor: "#CAE2FF" }} type='submit'>Zatwierdź nowe hasło</Button>
                                         <div style={{ display: this.state.show ? "block" : "none" }}>
                                             <br />
                                             <Button onClick={this.onClick} style={{ backgroundColor: "#CAE2FF" }}
@@ -117,7 +125,7 @@ class AccountSettings extends Component {
                                         <h3><label> {this.state.name} {this.state.lastName}</label></h3>
                                         <h4><label>Email: {this.state.email}</label></h4>
                                         <br />
-                                        <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Zmiana hasła zakończona sukcesem!!</p>
+                                        <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Zmiana hasła zakończona sukcesem.</p>
                                     </div>
                                 </Grid.Column>
                             </Grid>
