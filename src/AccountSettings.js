@@ -8,14 +8,41 @@ import AppUnlogged from "./AppUnlogged";
 class AccountSettings extends Component {
     constructor(props) {
         super(props);
-        this.state = { show: false, currentPassword: "", password: "", passwordConfirm: "", correct: false, success: false, error: false }
+        this.state = { email: "", name: "", lastName: "", show: false, currentPassword: "", password: "", passwordConfirm: "", correct: false, success: false, error: false }
     }
 
     onClick = e => {
         this.setState({
-            show: !this.state.show
+            show: !this.state.show,
+            error: false,
+            currentPassword: "",
+            password: "",
+            passwordConfirm: ""
         });
     };
+
+    componentDidMount() {
+
+        var self = this;
+        axios.get('http://localhost:8080/api/role/my-permissions').then(function (response) {
+            var perm;
+            for (perm of response.data) {
+                if (perm === "ROLE_MANAGE_OWN_ACCOUNT") {
+                    self.setState({ permissons: true })
+                }
+            }
+        }).catch(function (error) {
+            self.setState({ permissons: false })
+            //console.log("PROBLEM!" + error)
+        })
+        //if (self.state.permissons == true) {
+        axios.get('http://localhost:8080/api/user-account/me').then(function (response) {
+            //console.log(response)
+            self.setState({ name: response.data["name"], lastName: response.data["lastName"], email: response.data["email"] })
+
+        })
+        //}
+    }
 
     componentDidUpdate() {
         if (!this.state.correct && this.state.password.length > 7 && this.state.passwordConfirm.length > 7 && this.state.password === this.state.passwordConfirm) {
@@ -63,7 +90,7 @@ class AccountSettings extends Component {
                                             type='submit'>Zmień hasło</Button>
                                     </div>
                                     <h3 style={{ display: this.state.show ? "block" : "none" }}>Zmiana hasła</h3>
-                                    <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Niezgodność: Nie udało się zmienić hasła...</p>
+                                    <p style={{ display: this.state.error && this.state.show ? "block" : "none", color: "red" }}>Niezgodność: Nie udało się zmienić hasła...</p>
 
                                     <Form onSubmit={this.onSubmit} style={{ display: this.state.show ? "block" : "none" }}>
                                         <label>Stare hasło</label>
@@ -79,11 +106,16 @@ class AccountSettings extends Component {
                                             <input placeholder='' />
                                         </Form.Input>
                                         <Button style={{ backgroundColor: "#CAE2FF" }} type='submit' disabled={!this.state.correct} >Zatwierdź nowe hasło</Button>
+                                        <div style={{ display: this.state.show ? "block" : "none" }}>
+                                            <br />
+                                            <Button onClick={this.onClick} style={{ backgroundColor: "#CAE2FF" }}
+                                                type='reset'>Anuluj</Button>
+                                        </div>
                                     </Form>
                                     <div style={{ display: this.state.show ? "none" : "block" }}>
                                         <br />
-                                        <h3><label> Damian Wnukowski</label></h3>
-                                        <h4><label>Email: damian.wnukowski@email.com</label></h4>
+                                        <h3><label> {this.state.name} {this.state.lastName}</label></h3>
+                                        <h4><label>Email: {this.state.email}</label></h4>
                                         <br />
                                         <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Zmiana hasła zakończona sukcesem!!</p>
                                     </div>
