@@ -1,17 +1,23 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, withRouter } from 'react-router-dom'
 
 class AccountTr extends React.Component {
-    state = { userActivities: [] }
+    state = { userActivities: [], roles: { 'USER': 'Pracownik', 'ADMINISTRATOR': 'Admin' } }
 
+    onClick(id) {
+        window.location.href = "account/" + id;
+    }
+    onOver() {
+
+    }
     createBlocks = () => {
         const blocks = this.props.accounts.map((act) => {
             return (
-                <tr>
-                    <td><Link to={"account/" + act['id']}>{act['name']}</Link></td>
-                    <td><Link to={"account/" + act['id']}>{act['lastName']}</Link></td>
-                    <td><Link to={"account/" + act['id']}>{act['role']}</Link></td>
-                    <td><Link to={"account/" + act['id']}>{act['email']}</Link></td>
+                <tr role="button" onClick={() => this.onClick(act['id'])} style={{ cursor: "pointer" }}>
+                    <td><Link to={act['id']} className="btn btn-primary">{act['name']}</Link></td>
+                    <td><Link to={act['id']}>{act['lastName']}</Link></td>
+                    <td><Link to={act['id']}>{this.state.roles[act['role']]}</Link></td>
+                    <td><Link to={act['id']}>{act['email']}</Link></td>
                 </tr>
             )
         })
