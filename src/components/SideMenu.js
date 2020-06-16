@@ -84,8 +84,8 @@ export default class SideMenu extends Component {
             </Menu.Menu>
           </Menu.Item>
           <Menu.Item>
-            <Menu.Header>Dla administratora</Menu.Header>
-            <Menu.Menu>
+            <Menu.Header style={{ display: this.state.permissons ? "block" : "none" }}>Dla administratora</Menu.Header>
+            <Menu.Menu style={{ display: this.state.permissons ? "block" : "none" }}>
               <Link to="/register">
                 <Menu.Item
                   name="Zarejestruj nowego pracownika"
