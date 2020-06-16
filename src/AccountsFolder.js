@@ -12,8 +12,8 @@ class AccountsFolder extends Component {
 
     componentDidMount() {
         var self = this;
-        axios.get('http://localhost:8080/api/user-account??name=' + self.state.name + '&lastName=' + self.state.lastName + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
-            console.log(response)
+        axios.get('http://localhost:8080/api/user-account?name=' + self.state.name + '&lastName=' + self.state.lastName + '&email=' + self.state.email + '&role=' + self.state.role + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
+            // console.log(response)
             self.setState({ animals: response.data.content, maxPage: response.data.totalPages - 1 })
         })
     }
@@ -21,8 +21,8 @@ class AccountsFolder extends Component {
     componentDidUpdate() {
         if (this.state.update) {
             var self = this;
-            axios.get('http://localhost:8080/api/user-account??name=' + self.state.name + '&lastName=' + self.state.lastName + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
-                console.log(response)
+            axios.get('http://localhost:8080/api/user-account?name=' + self.state.name + '&lastName=' + self.state.lastName + '&email=' + self.state.email + '&role=' + self.state.role + '&page=' + self.state.page + '&size=' + self.state.size + '&sort=' + self.state.sort).then(function (response) {
+                // console.log(response)
                 self.setState({ animals: response.data.content, maxPage: response.data.totalPages - 1, update: false })
             })
         }

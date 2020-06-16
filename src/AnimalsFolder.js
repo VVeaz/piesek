@@ -74,7 +74,7 @@ class AnimalsFolder extends Component {
                                                 <th>
                                                     <div class="ui category search">
                                                         <div class="ui icon input">
-                                                            <input class="prompt" type="text" placeholder="Szukaj gatunku..." onChange={e => this.setState({ spacies: e.target.value, update: true })} />
+                                                            <input class="prompt" type="text" placeholder="Szukaj gatunku..." onChange={e => this.setState({ species: e.target.value, update: true })} />
                                                             <i class="search icon"></i>
                                                         </div>
                                                         <div class="results"></div>
