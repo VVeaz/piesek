@@ -32,7 +32,7 @@ const routing = (
             <Route path="/edit-animal" component={EditAnimal} />
             <Route path="/animal/:id" component={Animal} />
             <Route path="/account/:id" component={Account} />
-            <Route path="/edit-account" component={EditAccount} />
+            <Route path="/account-edit/:id" component={EditAccount} />
             <Route path="/accounts-folder" component={AccountsFolder} />
         </div>
     </Router>
