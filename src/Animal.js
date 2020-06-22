@@ -15,6 +15,7 @@ class Animal extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params
+        var ifbirthDateApproximated
 
         var self = this;
         axios.get('http://localhost:8080/api/role/my-permissions').then(function (response) {
@@ -27,7 +28,7 @@ class Animal extends Component {
         })
 
         axios.get('http://localhost:8080/api/animal/' + id).then(function (response) {
-            //console.log(response)
+            console.log(response)
             self.setState({
                 id: response.data["id"],
                 name: response.data["name"],
@@ -37,14 +38,15 @@ class Animal extends Component {
                 species: response.data["species"],
                 birthDateApproximated: response.data["birthDateApproximated"]
             })
+            ifbirthDateApproximated = response.data["birthDateApproximated"]
 
         }).catch(function (error) {
             self.setState({ permissons: false })
             //console.log("PROBLEM!" + error)
         })
-        console.log(this.state.birthDateApproximated)
-        if (this.state.birthDateApproximated === false) {
-            //console.log(this.state.birthDateApproximated)
+        // console.log(self.state.birthDateApproximated)
+        if (ifbirthDateApproximated === false) {
+            // console.log(self.state.birthDateApproximated)
             this.exactDate = "Dokładna"
         }
     }

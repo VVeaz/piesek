@@ -41,8 +41,8 @@ class AddAnimal extends Component {
             "description": this.state.description,
             "species": this.state.spicies,
             "pictureLocation": "string",
-            "diseases": this.state.diseases,
             "birthDateApproximated": this.state.birthDateApproximated,
+            "diseases": this.state.diseases,
         }
         let data = JSON.stringify(animal)
         let formData = new FormData()
@@ -98,7 +98,7 @@ class AddAnimal extends Component {
                                                 <label >Data urodzenia</label>
                                                 <input type="date" onChange={e => this.setState({ birthDate: e.target.value })} placeholder='' />
                                                 <div style={{ marginTop: 5 }} class="ui toggle checkbox">
-                                                    <input type="checkbox" tabindex="0" onClick={() => { this.setState({ birthDateApproximated: !this.state.birthDateApproximated }) }} />
+                                                    <input type="checkbox" tabindex="0" onClick={() => { this.setState({ birthDateApproximated: !this.state.birthDateApproximated }); console.log(this.state.birthDateApproximated) }} />
                                                     <label>Czy data przybliżona</label>
                                                 </div>
                                             </div>
