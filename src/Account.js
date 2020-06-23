@@ -53,8 +53,8 @@ class Account extends Component {
         console.log(id)
         axios.delete('http://localhost:8080/api/user-account/' + id).then(function (response) {
             console.log(response)
+            this.setState({ success: true, permissons: false })
         })
-
     }
 
 
@@ -79,7 +79,7 @@ class Account extends Component {
 
                             <Grid columns={4}>
                                 <Grid.Column>
-                                    <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Udana edycja.</p>
+                                    <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Udane usunięcie uzytkownika z systemu.</p>
                                     <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem</p>
                                     <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ. <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>

@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import AppUnlogged from "./AppUnlogged";
 import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+
 
 class Animal extends Component {
     constructor(props) {
@@ -53,9 +55,17 @@ class Animal extends Component {
     }
 
     onSubmit = e => {
-
     }
 
+    onDelete = e => {
+        const { id } = this.props.match.params
+        // console.log(id)
+        var self = this
+        axios.delete('http://localhost:8080/api/animal/' + id).then(function (response) {
+            // console.log(response)
+            self.setState({ success: true, permissons: false })
+        })
+    }
 
     render() {
         if (!axios.defaults.headers.common["Authorization"]) {
@@ -78,7 +88,7 @@ class Animal extends Component {
 
                             <Grid columns={2}>
                                 <Grid.Column>
-                                    <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Udane dodanie.</p>
+                                    <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Udane usunuęcie zwierzęcia z bazy.</p>
                                     <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem z dodaniem zwierzęcia.</p>
                                     <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ DO DODAWANIA ZWIERZĄT. <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
@@ -133,11 +143,13 @@ class Animal extends Component {
                                                 <label style={{ color: "#918383", marginBottom: 20 }}>{this.state.description}</label>                                            </div>
                                         </div>
                                         <div align="right" style={{ marginTop: 10 }} >
-                                            <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="reset" >
+
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="button" onClick={this.onDelete}>
                                                 <i class="minus icon"></i>
                                             </button>
+
                                             <label style={{ marginRight: 10 }} > Usuń zwierzę</label>
-                                            <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type='submit' >
+                                            <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type='button'>
                                                 <i class="check icon"></i>
                                             </button>
                                             <label>Edytuj zwierzę</label>

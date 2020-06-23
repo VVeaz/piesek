@@ -8,7 +8,7 @@ import AppUnlogged from "./AppUnlogged";
 class AddAnimal extends Component {
     constructor(props) {
         super(props);
-        this.state = { image: null, diseases: [], pictureLocation: "", show: false, name: "", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false }
+        this.state = { image: null, diseases: [], pictureLocation: "", show: false, name: "123", weight: "", birthDate: "", description: "", spicies: "", birthDateApproximated: false, permissons: false, success: false, error: false, addDisease: false, diseaseId: null, diseaseStartDate: null, diseasesEndDate: null, diseaseName: null, diseaseDescription: null }
     }
 
     componentDidMount() {
@@ -23,26 +23,48 @@ class AddAnimal extends Component {
         })
     }
 
-    appendDisease() {
-        var newInput = `input-${this.state.diseases.length}`;
-        var newStartDate = `startDate-${this.state.diseases.length}`;
-        var newEndDate = `endDate-${this.state.diseases.length}`;
-        var newDescription = `description-${this.state.diseases.length}`;
-        var newDisease = (newInput, newStartDate, newEndDate, newDescription)
-        this.setState(prevState => ({ diseases: prevState.diseases.concat([newDisease]) }));
-    }
+    // appendDisease() {
+    //     var newInput = `input-${this.state.diseases.length}`;
+    //     var newStartDate = `startDate-${this.state.diseases.length}`;
+    //     var newEndDate = `endDate-${this.state.diseases.length}`;
+    //     var newDescription = `description-${this.state.diseases.length}`;
+    //     var newDisease = (newInput, newStartDate, newEndDate, newDescription)
+    //     this.setState(prevState => ({ diseases: prevState.diseases.concat([newDisease]) }));
+    // }
 
     onSubmit = e => {
         var self = this;
-        let animal = {
-            "name": this.state.name,
-            "weight": this.state.weight,
-            "birthDate": this.state.birthDate,
-            "description": this.state.description,
-            "species": this.state.spicies,
-            "pictureLocation": "string",
-            "birthDateApproximated": this.state.birthDateApproximated,
-            "diseases": this.state.diseases,
+        console.log("DIS: " + this.state.diseases)
+        let animal
+        if (this.state.addDisease) {
+            animal = {
+                "name": this.state.name,
+                "weight": this.state.weight,
+                "birthDate": this.state.birthDate,
+                "description": this.state.description,
+                "species": this.state.spicies,
+                "pictureLocation": "string",
+                "birthDateApproximated": this.state.birthDateApproximated,
+                "diseases": [
+                    {
+                        "startDate": this.state.diseaseStartDate,
+                        "endDate": this.state.diseasesEndDate,
+                        "name": this.state.diseaseName,
+                        "description": this.state.diseaseDescription
+                    }
+                ],
+            }
+        } else {
+            animal = {
+                "name": this.state.name,
+                "weight": this.state.weight,
+                "birthDate": this.state.birthDate,
+                "description": this.state.description,
+                "species": this.state.spicies,
+                "pictureLocation": "string",
+                "birthDateApproximated": this.state.birthDateApproximated,
+                "diseases": this.state.diseases,
+            }
         }
         let data = JSON.stringify(animal)
         let formData = new FormData()
@@ -96,7 +118,7 @@ class AddAnimal extends Component {
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Data urodzenia</label>
-                                                <input type="date" onChange={e => this.setState({ birthDate: e.target.value })} placeholder='' />
+                                                <input type="date" onChange={e => this.setState({ birthDate: e.target.value })} placeholder='' /><br />
                                                 <div style={{ marginTop: 5 }} class="ui toggle checkbox">
                                                     <input type="checkbox" tabindex="0" onClick={() => { this.setState({ birthDateApproximated: !this.state.birthDateApproximated }); console.log(this.state.birthDateApproximated) }} />
                                                     <label>Czy data przybliżona</label>
@@ -115,7 +137,7 @@ class AddAnimal extends Component {
                                                                 {/* {this.state.inputs.map(input => <input key={input} />)}
                                                                     {this.state.startDates.map(input => <input type="date" key={input} />)}
                                                                     {this.state.endDates.map(input => <input type="date" key={input} />)} */}
-                                                                {this.state.diseases.map((index) => {
+                                                                {/* {this.state.diseases.map((index) => {
                                                                     return (
                                                                         <div class="inline field" style={{ marginLeft: 75 }}>
                                                                             <i class="heartbeat icon"></i>
@@ -129,16 +151,31 @@ class AddAnimal extends Component {
                                                                             <textarea key={index} />
                                                                         </div>
                                                                     )
-                                                                })}
+                                                                })} */}
+                                                                <div class="inline field" style={{ marginLeft: 75, display: this.state.addDisease ? "block" : "none" }}>
+                                                                    <i class="heartbeat icon"></i>
+                                                                    <label style={{ marginRight: 15 }}>Nazwa</label>
+                                                                    <input onChange={e => this.setState({ diseaseName: e.target.value })} /><br />
+                                                                    <label style={{ marginRight: 15 }}>Rozpoczęcie choroby</label>
+                                                                    <input type="date" onChange={e => this.setState({ diseaseStartDate: e.target.value })} /><br />
+                                                                    <label style={{ marginRight: 15 }}>Zakończenie choroby</label>
+                                                                    <input type="date" onChange={e => this.setState({ diseasesEndDate: e.target.value })} /><br />
+                                                                    <label >Opis choroby</label>
+                                                                    <textarea onChange={e => this.setState({ diseaseDescription: e.target.value })} />
+                                                                    <button class="ui basic button" onClick={() => (this.setState({ addDisease: !this.state.addDisease }))} type="button">
+                                                                        Anuluj dodawanie choroby.
+                                                                    </button>
+
+                                                                </div>
 
                                                             </div>
                                                         </div>
 
                                                     </div>
                                                 </a>
-                                                <button class="ui basic button" onClick={() => this.appendDisease()}>
+                                                <button class="ui basic button" style={{ display: !this.state.addDisease ? "block" : "none" }} onClick={() => (this.setState({ addDisease: !this.state.addDisease }))} type="button">
                                                     <i class="medkit icon"></i>
-                                                    Naciśnij by dodać kolejną chorobę
+                                                    Naciśnij by dodać chorobę
                                                             </button>
                                             </div>
 
