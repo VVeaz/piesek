@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 class Animal extends Component {
     constructor(props) {
         super(props);
-        this.state = { inputs: [], id: "0", show: false, name: "", weight: "", birthDate: "", description: "", species: "", birthDateApproximated: false, permissons: false, success: false, error: false }
+        this.state = { image: "", inputs: [], id: "0", show: false, name: "", weight: "", birthDate: "", description: "", species: "", birthDateApproximated: false, permissons: false, success: false, error: false }
         this.exactDate = "Przybliżona"
     }
 
@@ -36,10 +36,11 @@ class Animal extends Component {
                 birthDate: response.data["birthDate"].substring(0, 10),
                 description: response.data["description"],
                 species: response.data["species"],
-                birthDateApproximated: response.data["birthDateApproximated"]
+                birthDateApproximated: response.data["birthDateApproximated"],
+                image: response.data["pictureLocation"]
             })
             ifbirthDateApproximated = response.data["birthDateApproximated"]
-
+            console.log("!@#" + response.data["pictureLocation"])
         }).catch(function (error) {
             self.setState({ permissons: false })
             //console.log("PROBLEM!" + error)
@@ -86,6 +87,7 @@ class Animal extends Component {
 
 
                                             <i class="camera icon" />
+                                            <img src={this.state.image} alt="Brak zdjęcia"></img>
 
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
                                                 <label >Imię</label>
