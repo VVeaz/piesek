@@ -11,7 +11,15 @@ import { Redirect } from 'react-router-dom'
 class Animal extends Component {
     constructor(props) {
         super(props);
-        this.state = { image: "", inputs: [], id: "0", show: false, name: "", weight: "", birthDate: "", description: "", species: "", birthDateApproximated: false, permissons: false, success: false, error: false, exact: "Dupa" }
+        this.state = {
+            image: "", inputs: [], id: "0", show: false, name: "", weight: "", birthDate: "", description: "", species: "", birthDateApproximated: false, diseases: [{
+                "id": 0,
+                "startDate": "",
+                "endDate": "",
+                "name": "",
+                "description": ""
+            }], permissons: false, success: false, error: false, exact: "Przybliżona"
+        }
     }
 
     componentDidMount() {
@@ -38,8 +46,22 @@ class Animal extends Component {
                 description: response.data["description"],
                 species: response.data["species"],
                 birthDateApproximated: response.data["birthDateApproximated"],
+                diseases: response.data["diseases"],
                 image: response.data["pictureLocation"]
             })
+            if (self.state.diseases.length > 0) {
+                self.setState({
+                    diseases: [{
+                        "id": 0,
+                        "startDate": self.state.diseases[0]["startDate"].substring(0, 10),
+                        "endDate": self.state.diseases[0]["endDate"].substring(0, 10),
+                        "name": self.state.diseases[0]["name"],
+                        "description": self.state.diseases[0]["description"]
+                    }]
+                })
+            }
+            console.log("-------------")
+            console.log(self.state.diseases)
             ifbirthDateApproximated = self.state.birthDateApproximated
             if (ifbirthDateApproximated === false) {
                 console.log(self.state.birthDateApproximated)
@@ -121,19 +143,34 @@ class Animal extends Component {
                                                             <label >Gatunek</label>
                                                             <label style={{ color: "#918383" }}>{this.state.species}</label>                                           </div>
                                                         <div class="inline field" align="right" style={{ marginRight: 75 }}>
-                                                            <label>Choroby</label>
-                                                            <div class="ui list">
-                                                                <a class="item">
-                                                                    <div class="content">
-                                                                        <div class="inline field">
-                                                                            <i class="heartbeat icon"></i>
-                                                                            <label>Katarek</label>
+                                                            <label>Ostatnia choroba</label>
+                                                            {this.state.diseases.length > 0 &&
+                                                                <div class="ui list" style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}>
+                                                                    <a class="item" style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}>
+                                                                        <div class="content" style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}>
+                                                                            <div class="inline field" style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}>
+                                                                                <i class="heartbeat icon" style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}></i>
+                                                                                <label>{this.state.diseases[0]["name"]}</label>
+                                                                            </div>
+                                                                            <div class="inline field " style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}>
+                                                                                <label style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}>Początek choroby</label>
+                                                                                <label style={{ color: "#918383" }}>{this.state.diseases[0]["startDate"]}</label>
+                                                                            </div>
+                                                                            <div class="inline field" style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}>
+                                                                                <label style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}>Koniec choroby</label>
+                                                                                <label style={{ color: "#918383" }}>{this.state.diseases[0]["endDate"]}</label>
+                                                                            </div>
+                                                                            <div class="inline field" style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}>
+                                                                                <label style={{ display: this.state.diseases.length == 0 ? "none" : "block" }}>Opis choroby</label>
+                                                                                <label style={{ color: "#918383" }}>{this.state.diseases[0]["description"]}</label>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </a>
+                                                                    </a>
 
 
-                                                            </div>
+                                                                </div>
+                                                            }
+                                                            <label style={{ display: this.state.diseases.length > 0 ? "none" : "block" }}>Brak chorób</label>
                                                         </div>
                                                     </Grid.Column>
                                                 </Grid.Row>
