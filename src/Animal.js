@@ -9,8 +9,7 @@ import { Link } from 'react-router-dom'
 class Animal extends Component {
     constructor(props) {
         super(props);
-        this.state = { image: "", inputs: [], id: "0", show: false, name: "", weight: "", birthDate: "", description: "", species: "", birthDateApproximated: false, permissons: false, success: false, error: false }
-        this.exactDate = "Przybliżona"
+        this.state = { image: "", inputs: [], id: "0", show: false, name: "", weight: "", birthDate: "", description: "", species: "", birthDateApproximated: false, permissons: false, success: false, error: false, exact: "Dupa" }
     }
 
     componentDidMount() {
@@ -39,17 +38,18 @@ class Animal extends Component {
                 birthDateApproximated: response.data["birthDateApproximated"],
                 image: response.data["pictureLocation"]
             })
-            ifbirthDateApproximated = response.data["birthDateApproximated"]
-            console.log("!@#" + response.data["pictureLocation"])
+            ifbirthDateApproximated = self.state.birthDateApproximated
+            if (ifbirthDateApproximated === false) {
+                console.log(self.state.birthDateApproximated)
+                // this.exactDate = "Dokładna"
+                self.setState({ exact: "Dokładna" })
+            }
         }).catch(function (error) {
             self.setState({ permissons: false })
             //console.log("PROBLEM!" + error)
+
         })
-        // console.log(self.state.birthDateApproximated)
-        if (ifbirthDateApproximated === false) {
-            // console.log(self.state.birthDateApproximated)
-            this.exactDate = "Dokładna"
-        }
+
     }
 
     onSubmit = e => {
@@ -83,45 +83,51 @@ class Animal extends Component {
                                     <p style={{ display: !this.state.permissons ? "block" : "none" }}> NIE POSIADASZ UPRAWNIŃ DO DODAWANIA ZWIERZĄT. <br /> Wróć gdy otrzymasz taki przywilej. </p>
                                     <Form style={{ display: this.state.permissons ? "block" : "none" }} onSubmit={this.onSubmit}>
                                         <div style={{ backgroundColor: "#E9E9E9", borderRadius: 15 }} >
+                                            <Grid columns={2}>
+                                                <Grid.Row>
+                                                    <Grid.Column>
+                                                        <i class="camera icon" />
+
+                                                        <img src={this.state.image} alt="Brak zdjęcia"></img>
+                                                    </Grid.Column>
+                                                    <Grid.Column>
+
+                                                        <div class="inline field" align="right" style={{ marginRight: 75 }}>
+                                                            <label >Imię</label>
+                                                            <label style={{ color: "#918383" }}>{this.state.name}</label>
+                                                        </div>
+                                                        <div class="inline field" align="right" style={{ marginRight: 75 }}>
+                                                            <label >Waga</label>
+                                                            <label style={{ color: "#918383" }}>{this.state.weight}</label>
+                                                        </div>
+                                                        <div class="inline field" align="right" style={{ marginRight: 75 }}>
+                                                            <label >Data urodzenia</label>
+                                                            <label style={{ color: "#918383" }}>{this.state.birthDate}</label>
+                                                            <tr />
+
+                                                            <label style={{ color: "#918383" }}>{this.state.exact}</label>
+                                                        </div>
+                                                        <div class="inline field" align="right" style={{ marginRight: 75 }} >
+                                                            <label >Gatunek</label>
+                                                            <label style={{ color: "#918383" }}>{this.state.species}</label>                                           </div>
+                                                        <div class="inline field" align="right" style={{ marginRight: 75 }}>
+                                                            <label>Choroby</label>
+                                                            <div class="ui list">
+                                                                <a class="item">
+                                                                    <div class="content">
+                                                                        <div class="inline field">
+                                                                            <i class="heartbeat icon"></i>
+                                                                            <label>Katarek</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
 
 
-
-                                            <i class="camera icon" />
-                                            <img src={this.state.image} alt="Brak zdjęcia"></img>
-
-                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
-                                                <label >Imię</label>
-                                                <label style={{ color: "#918383" }}>{this.state.name}</label>
-                                            </div>
-                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
-                                                <label >Waga</label>
-                                                <label style={{ color: "#918383" }}>{this.state.weight}</label>
-                                            </div>
-                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
-                                                <label >Data urodzenia</label>
-                                                <label style={{ color: "#918383" }}>{this.state.birthDate}</label>
-                                                <tr />
-
-                                                <label style={{ color: "#918383" }}>{this.exactDate}</label>
-                                            </div>
-                                            <div class="inline field" align="right" style={{ marginRight: 75 }} >
-                                                <label >Gatunek</label>
-                                                <label style={{ color: "#918383" }}>{this.state.species}</label>                                           </div>
-                                            <div class="inline field" align="right" style={{ marginRight: 75 }}>
-                                                <label>Choroby</label>
-                                                <div class="ui list">
-                                                    <a class="item">
-                                                        <div class="content">
-                                                            <div class="inline field">
-                                                                <i class="heartbeat icon"></i>
-                                                                <label>Katarek</label>
                                                             </div>
                                                         </div>
-                                                    </a>
-
-
-                                                </div>
-                                            </div>
+                                                    </Grid.Column>
+                                                </Grid.Row>
+                                            </Grid>
                                             <div class="inline field" style={{ marginRight: 50, marginLeft: 50, }}>
                                                 <label>Notatki</label>
                                                 <label style={{ color: "#918383", marginBottom: 20 }}>{this.state.description}</label>                                            </div>
