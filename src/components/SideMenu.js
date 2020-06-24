@@ -5,7 +5,7 @@ import icon from "../logo.png";
 import axios from 'axios'
 
 export default class SideMenu extends Component {
-  state = { name: "", lastName: "" };
+  state = { name: "", lastName: "", permissons: false };
   menuStyle = {
     border: 0,
     boxShadow: "none",
@@ -20,7 +20,7 @@ export default class SideMenu extends Component {
     axios.get('http://localhost:8080/api/role/my-permissions').then(function (response) {
       var perm;
       for (perm of response.data) {
-        if (perm === "ROLE_MANAGE_OWN_ACCOUNT") {
+        if (perm === "ROLE_MANAGE_USER_ACCOUNTS") {
           self.setState({ permissons: true })
         }
       }
