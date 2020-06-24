@@ -108,7 +108,7 @@ class Animal extends Component {
                             </Link>
                             <hr />
 
-                            <Grid columns={2}>
+                            <Grid columns={2} style={{ marginTop: 15 }}>
                                 <Grid.Column>
                                     <p style={{ display: this.state.success ? "block" : "none", color: "green" }}>Udane usunuęcie zwierzęcia z bazy.</p>
                                     <p style={{ display: this.state.error ? "block" : "none", color: "red" }}>Problem z dodaniem zwierzęcia.</p>
@@ -118,9 +118,8 @@ class Animal extends Component {
                                             <Grid columns={2}>
                                                 <Grid.Row>
                                                     <Grid.Column>
-                                                        <i class="camera icon" />
 
-                                                        <img src={this.state.image} alt="Brak zdjęcia"></img>
+                                                        <img src={this.state.image} alt="Brak zdjęcia" style={{ borderRadius: 15, marginLeft: 15 }}></img>
                                                     </Grid.Column>
                                                     <Grid.Column>
 
@@ -190,8 +189,9 @@ class Animal extends Component {
                                                 <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type='button'>
                                                     <i class="check icon"></i>
                                                 </button>
-                                                <label>Edytuj zwierzę</label>
                                             </Link>
+                                            <label>Edytuj zwierzę</label>
+
                                         </div>
                                     </Form>
 

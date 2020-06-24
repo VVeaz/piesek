@@ -87,7 +87,7 @@ class Account extends Component {
                                         <div style={{ backgroundColor: "#E9E9E9", borderRadius: 15 }} >
 
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
-                                                <label >Imię</label>
+                                                <label style={{ marginTop: 10 }}>Imię</label>
                                                 <label style={{ color: "#918383" }}>{this.state.name}</label>
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }}>
@@ -104,7 +104,7 @@ class Account extends Component {
                                             </div>
                                             <div class="inline field" align="right" style={{ marginRight: 75 }} >
                                                 <label >E-mail</label>
-                                                <label style={{ color: "#918383" }}>{this.state.email}</label>
+                                                <label style={{ color: "#918383", marginBottom: 10 }}>{this.state.email}</label>
                                             </div>
                                         </div>
                                         <div align="right" style={{ marginTop: 10 }} >

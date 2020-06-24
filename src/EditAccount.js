@@ -111,7 +111,7 @@ class EditAccount extends Component {
                                                 <label style={{ marginTop: 15 }} >Nazwisko</label>
                                                 <input value={this.state.lastName} onChange={e => this.setState({ name: e.target.value })} placeholder='' />
                                             </Form.Field>
-                                            <Form.Field style={{ marginLeft: 75, marginRight: 75, width: 5 }}
+                                            <Form.Field style={{ marginBottom: 10, marginLeft: 75, marginRight: 75, width: 5 }}
                                                 control={Select}
                                                 options={this.roleOptions}
                                                 placeholder='Rola'
@@ -133,12 +133,13 @@ class EditAccount extends Component {
                                                 <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="reset" >
                                                     <i class="minus icon"></i>
                                                 </button>
-                                                <label style={{ marginRight: 10 }} > Anuluj</label>
                                             </Link>
+                                            <label style={{ marginRight: 10 }} > Anuluj</label>
+
                                             <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type='submit' >
                                                 <i class="check icon"></i>
                                             </button>
-                                            <label>Zapisz zmiany</label>
+                                            <label >Zapisz zmiany</label>
                                         </div>
                                     </Form>
                                 </Grid.Column>
