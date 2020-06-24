@@ -62,6 +62,7 @@ class AnimalsFolder extends Component {
                                     <table class="ui sortable celled table">
                                         <thead>
                                             <tr>
+                                                
                                                 <th>
                                                     <div class="ui category search">
                                                         <div class="ui icon input">
@@ -82,6 +83,7 @@ class AnimalsFolder extends Component {
                                                 </th>
                                             </tr>
                                             <tr>
+                                               
                                                 <th onClick={() => { this.sortByName() }}>Imię</th>
                                                 <th onClick={() => { this.sortBySpecies() }}>Gatunek</th>
                                             </tr>

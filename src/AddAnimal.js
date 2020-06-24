@@ -34,7 +34,7 @@ class AddAnimal extends Component {
 
     onSubmit = e => {
         var self = this;
-        console.log("DIS: " + this.state.diseases)
+        // console.log("DIS: " + this.state.diseases)
         let animal
         if (this.state.addDisease) {
             animal = {

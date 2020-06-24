@@ -4,6 +4,7 @@ import { Form, Grid, Select } from "semantic-ui-react";
 import React, { Component } from 'react';
 import axios from 'axios'
 import AppUnlogged from "./AppUnlogged";
+import { Link } from 'react-router-dom'
 
 class EditAccount extends Component {
 
@@ -13,10 +14,11 @@ class EditAccount extends Component {
             { key: 'u', text: 'Pracownik', value: 'USER' },
             { key: 'a', text: 'Admin', value: 'ADMINISTRATOR' }
         ]
-        this.state = { email: '', name: '', lastName: '', role: '' }
+        this.state = { id: 0, email: '', name: '', lastName: '', role: '' }
     }
 
     componentDidMount() {
+        const { id } = this.props.match.params
         var self = this;
         axios.get('http://localhost:8080/api/role/my-permissions').then(function (response) {
             var perm;
@@ -26,8 +28,13 @@ class EditAccount extends Component {
                 }
             }
         })
-        axios.get('http://localhost:8080/api/animal/1').then(function (response) {
-            console.log(response.data);
+        axios.get('http://localhost:8080/api/user-account/' + id).then(function (response) {
+            console.log(response)
+            self.setState({ id: response.data["id"], name: response.data["name"], lastName: response.data["lastName"], role: response.data["role"], email: response.data["email"], createdDate: response.data["createdDate"].substring(0, 10) })
+
+        }).catch(function (error) {
+            self.setState({ permissons: false })
+            //console.log("PROBLEM!" + error)
         })
     }
     inputChangeHandler(e, name, value) {
@@ -38,38 +45,41 @@ class EditAccount extends Component {
         }
     }
     onSubmit = e => {
-        var self = this;
-        let animal = {
-            "id:": 1,   //id pobierane z linku przegladania
+        // console.log(this.state.id)
+        axios.patch('http://localhost:8080/api/user-account', {
+            "id": this.state.id,
             "name": this.state.name,
-            "weight": this.state.weight,
-            "birthDate": this.state.birthDate,
-            "description": this.state.description,
-            "species": this.state.spicies,
-            "pictureLocation": "string",
-            "diseases": this.state.diseases,
-            "birthDateApproximated": this.state.birthDateApproximated,
-        }
-        let data = JSON.stringify(animal)
-        let formData = new FormData()
-        const blob = new Blob([data], {
-            type: 'application/json'
-        });
-        formData.append("animal", blob)
-        formData.append("image", this.state.image)
-
-        axios.put('http://localhost:8080/api/animal', formData, {
-            'Content-Type': 'application/json',
+            "lastName": this.state.lastName,
+            "role": this.state.role
         }).then(function (response) {
-            self.setState({ success: true, error: false })
-            console.log(response);
+            console.log(response)
         }).catch(function (error) {
-            self.setState({ error: true, success: false })
-            console.log(error);
-        });
+            //self.setState({ permissons: false })
+            console.log("PROBLEM!" + error)
+        })
 
+        // let animal = {
+        //     "id": 0,
+        //     "name": this.state.name,
+        //     "lastName": this.state.lastName,
+        //     "role": this.state.role
+        // }
+
+        // let data = JSON.stringify(animal)
+        // let formData = new FormData()
+        // const blob = new Blob([data], {
+        //     type: 'application/json'
+        // });
+        // formData.append("animal", blob)
+
+        // axios.patch('http://localhost:8080/api/user-account', animal, {
+        //     'Content-Type': 'application/json',
+        // }).then(function (response) {
+        //     console.log(response);
+        // }).catch(function (error) {
+        //     console.log(error);
+        // });
     }
-
 
     render() {
         if (!axios.defaults.headers.common["Authorization"]) {
@@ -95,34 +105,36 @@ class EditAccount extends Component {
 
                                             <Form.Field style={{ marginRight: 75, marginLeft: 75 }}>
                                                 <label style={{ marginTop: 15 }} >Imię</label>
-                                                <input onChange={e => this.setState({ name: e.target.value })} placeholder='' />
+                                                <input value={this.state.name} onChange={e => this.setState({ name: e.target.value })} placeholder='' />
                                             </Form.Field>
                                             <Form.Field style={{ marginRight: 75, marginLeft: 75 }}>
                                                 <label style={{ marginTop: 15 }} >Nazwisko</label>
-                                                <input onChange={e => this.setState({ name: e.target.value })} placeholder='' />
+                                                <input value={this.state.lastName} onChange={e => this.setState({ name: e.target.value })} placeholder='' />
                                             </Form.Field>
                                             <Form.Field style={{ marginLeft: 75, marginRight: 75, width: 5 }}
                                                 control={Select}
                                                 options={this.roleOptions}
                                                 placeholder='Rola'
                                             />
-                                            <Form.Field style={{ marginRight: 75, marginLeft: 75 }}>
+                                            {/* <Form.Field style={{ marginRight: 75, marginLeft: 75 }}>
                                                 <label >Data zatrudnienia</label>
                                                 <input type="date" onChange={e => this.setState({ birthDate: e.target.value })} placeholder='' />
 
                                             </Form.Field>
                                             <Form.Field style={{ marginRight: 75, marginLeft: 75 }} >
                                                 <label >E-mail</label>
-                                                <input style={{ marginBottom: 15 }} onChange={e => this.setState({ spicies: e.target.value })} placeholder='' />
-                                            </Form.Field>
+                                                <input value={this.state.email} style={{ marginBottom: 15 }} onChange={e => this.setState({ spicies: e.target.value })} placeholder='' />
+                                            </Form.Field> */}
 
 
                                         </div>
                                         <div align="right" style={{ marginTop: 10 }} >
-                                            <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="reset" >
-                                                <i class="minus icon"></i>
-                                            </button>
-                                            <label style={{ marginRight: 10 }} > Anuluj</label>
+                                            <Link to={"/account/" + this.props.match.params.id}>
+                                                <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="reset" >
+                                                    <i class="minus icon"></i>
+                                                </button>
+                                                <label style={{ marginRight: 10 }} > Anuluj</label>
+                                            </Link>
                                             <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type='submit' >
                                                 <i class="check icon"></i>
                                             </button>

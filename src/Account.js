@@ -50,10 +50,11 @@ class Account extends Component {
 
     onDelete = e => {
         const { id } = this.props.match.params
-        console.log(id)
+        var self = this;
+        // console.log(id)
         axios.delete('http://localhost:8080/api/user-account/' + id).then(function (response) {
-            console.log(response)
-            this.setState({ success: true, permissons: false })
+            // console.log(response)
+            self.setState({ success: true, permissons: false })
         })
     }
 
@@ -108,11 +109,9 @@ class Account extends Component {
                                         </div>
                                         <div align="right" style={{ marginTop: 10 }} >
                                             <span style={{ display: this.state.amI ? "none" : "inline" }}>
-                                                <Link to="/accounts-folder">
-                                                    <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="reset" onClick={this.onDelete} >
-                                                        <i class="minus icon"></i>
-                                                    </button>
-                                                </Link>
+                                                <button class="circular ui icon button" style={{ backgroundColor: "#FFABB6" }} type="reset" onClick={this.onDelete} >
+                                                    <i class="minus icon"></i>
+                                                </button>
                                                 <label style={{ marginRight: 10 }} > Usuń konto</label>
                                             </span>
                                             <span>

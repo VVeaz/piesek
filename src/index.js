@@ -29,7 +29,7 @@ const routing = (
             <Route path="/account-settings" component={AccountSettings} />
             <Route path="/animals-folder" component={AnimalsFolder} />
             <Route path="/add-animal" component={AddAnimal} />
-            <Route path="/animal-edit" component={EditAnimal} />
+            <Route path="/animal-edit/:id" component={EditAnimal} />
             <Route path="/animal/:id" component={Animal} />
             <Route path="/account/:id" component={Account} />
             <Route path="/account-edit/:id" component={EditAccount} />

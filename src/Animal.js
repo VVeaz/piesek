@@ -149,10 +149,12 @@ class Animal extends Component {
                                             </button>
 
                                             <label style={{ marginRight: 10 }} > Usuń zwierzę</label>
-                                            <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type='button'>
-                                                <i class="check icon"></i>
-                                            </button>
-                                            <label>Edytuj zwierzę</label>
+                                            <Link to={"/animal-edit/" + this.props.match.params.id}>
+                                                <button class="circular ui icon button" style={{ backgroundColor: "#B2E8C4" }} type='button'>
+                                                    <i class="check icon"></i>
+                                                </button>
+                                                <label>Edytuj zwierzę</label>
+                                            </Link>
                                         </div>
                                     </Form>
 
