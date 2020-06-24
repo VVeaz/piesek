@@ -1,0 +1,10 @@
+.image{
+    border-radius: 50%;
+}
+
+.margi{
+    display:inline-block;
+    text-align: center;
+    margin-right: 20px;
+    float: left;
+}
